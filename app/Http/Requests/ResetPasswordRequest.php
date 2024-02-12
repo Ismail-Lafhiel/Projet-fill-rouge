@@ -11,7 +11,7 @@ class ResetPasswordRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,21 @@ class ResetPasswordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'email' => 'required|string|email',
+            'password' => [
+                'required',
+                'string',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/',
+                'confirmed'
+            ],
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'email.required' => 'Email is required.',
+            'password.required' => 'Password is required.',
+            'password.regex' => 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.',
         ];
     }
 }
