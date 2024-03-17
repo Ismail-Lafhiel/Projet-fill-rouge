@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\HotelController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,13 +20,13 @@ Route::get('/', function () {
 })->name('welcome');
 
 // auth routes
-Route::get('/login', [AuthController::class, 'showLogin'])->name("loginForm");
+Route::get('/login', [AuthController::class, 'showLogin'])->name("login");
 
-Route::get('/register', [AuthController::class, 'showRegister'])->name("registerForm");
+Route::get('/register', [AuthController::class, 'showRegister'])->name("register");
 
-Route::post('/login-to-account', [AuthController::class, 'login'])->name('login');
+Route::post('/login-to-account', [AuthController::class, 'login'])->name('account.login');
 
-Route::post('/create-account', [AuthController::class, 'register'])->name('register');
+Route::post('/create-account', [AuthController::class, 'register'])->name('account.register');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -40,8 +41,17 @@ Route::get('/reset-password', function () {
 Route::post('/change-password', [AuthController::class, 'changePassword'])->name('password.change');
 
 
-// admin
 
-Route::get('/dashboard', function(){
-    return view("admin.index");
+
+
+Route::middleware([
+    'auth'
+])->group(function () {
+    // hotel routes
+    Route::resource('hotels', HotelController::class);
+
+    // admin dashboard
+    Route::get('/dashboard', function () {
+        return view("admin.index");
+    });
 });
