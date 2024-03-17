@@ -27,6 +27,8 @@ Route::post('/login-to-account', [AuthController::class, 'login'])->name('login'
 
 Route::post('/create-account', [AuthController::class, 'register'])->name('register');
 
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
 Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name("forgotPassword");
 
 Route::post('/send-reset-link-email', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
@@ -36,3 +38,10 @@ Route::get('/reset-password', function () {
 })->name('password.reset');
 
 Route::post('/change-password', [AuthController::class, 'changePassword'])->name('password.change');
+
+
+// admin
+
+Route::get('/dashboard', function(){
+    return view("admin.index");
+});
