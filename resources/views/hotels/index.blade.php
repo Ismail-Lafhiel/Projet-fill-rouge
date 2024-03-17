@@ -165,45 +165,47 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="border-b dark:border-gray-700">
-                                        <td class="px-4 py-3">1</td>
-                                        <th scope="row"
-                                            class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            hhh</th>
-                                        <td class="px-4 py-3">hhh</td>
-                                        <td class="px-4 py-3">13</td>
-                                        <td class="px-4 py-3 flex items-center justify-end">
-                                            <button id="1-dropdown-button" data-dropdown-toggle="1-dropdown"
-                                                class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
-                                                type="button">
-                                                <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
-                                                    viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                                                </svg>
-                                            </button>
-                                            <div id="1-dropdown"
-                                                class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
-                                                <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                                                    aria-labelledby="1-dropdown-button">
-                                                    <li>
-                                                        <a href="#"
-                                                            class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#"
-                                                            class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
-                                                    </li>
-                                                </ul>
-                                                <a id="deleteButton" data-modal-target="deleteModal"
-                                                    data-modal-toggle="deleteModal" data-record-id="1"
-                                                    data-action="#"
-                                                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                                                    Delete
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    @foreach ($hotels as $hotel)
+                                        <tr class="border-b dark:border-gray-700">
+                                            <td class="px-4 py-3">{{$hotel->id}}</td>
+                                            <th scope="row"
+                                                class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                {{$hotel->name}}</th>
+                                            <td class="px-4 py-3">{{$hotel->location->city}}, {{$hotel->location->country}}</td>
+                                            <td class="px-4 py-3">{{$hotel->number_of_rooms}}</td>
+                                            <td class="px-4 py-3 flex items-center justify-end">
+                                                <button id="{{$hotel->id}}-dropdown-button" data-dropdown-toggle="{{$hotel->id}}-dropdown"
+                                                    class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
+                                                    type="button">
+                                                    <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
+                                                        viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                                    </svg>
+                                                </button>
+                                                <div id="{{$hotel->id}}-dropdown"
+                                                    class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+                                                    <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
+                                                        aria-labelledby="{{$hotel->id}}-dropdown-button">
+                                                        <li>
+                                                            <a href="#"
+                                                                class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#"
+                                                                class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                                                        </li>
+                                                    </ul>
+                                                    <a id="deleteButton" data-modal-target="deleteModal"
+                                                        data-modal-toggle="deleteModal" data-record-id="1"
+                                                        data-action="#"
+                                                        class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                                        Delete
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -277,12 +279,14 @@
                                     placeholder="Type event description"></textarea>
                             </div>
                             <div>
-                                <label for="location"
+                                <label for="location_id"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hotel
                                     Location</label>
-                                <input type="text" name="location" id="location"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="Type event location">
+                                <select name="location_id" id="location_id">
+                                    <option value="1">Marrakech</option>
+                                    <option value="2">NYC</option>
+                                    <option value="3">Berlin</option>
+                                </select>
                             </div>
                             <div>
                                 <label for="number_of_rooms"
@@ -298,7 +302,7 @@
                                     Photo</label>
                                 <input
                                     class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                    id="photos" name="photos" type="file">
+                                    id="photos" name="photos[]" type="file" multiple>
                             </div>
                         </div>
                         <button type="submit"

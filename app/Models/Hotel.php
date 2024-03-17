@@ -8,12 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class Hotel extends Model
 {
     use HasFactory;
-
     protected $fillable = [
         'name',
         'location_id',
         'number_of_rooms',
         'description',
-        'photos'
     ];
+
+    public function photos()
+    {
+        return $this->hasMany(Photo::class);
+    }
+    public function location()
+    {
+        return $this->belongsTo(Location::class);
+    }
 }

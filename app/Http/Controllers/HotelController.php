@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\HotelRequest;
 use App\Models\Hotel;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,8 @@ class HotelController extends Controller
      */
     public function index()
     {
-        return view("hotels.index");
+        $hotels = Hotel::orderBy("created_at", "desc")->paginate(10);
+        return view("hotels.index", compact('hotels'));
     }
 
     /**
@@ -26,9 +28,26 @@ class HotelController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(HotelRequest $request)
     {
-        //
+        $hotel = new Hotel([
+            'name' => $request->name,
+            'location_id' => $request->location_id,
+            'number_of_rooms' => $request->number_of_rooms,
+            'description' => $request->description,
+        ]);
+
+        $hotel->save();
+
+        if ($request->hasFile('photos')) {
+            foreach ($request->file('photos') as $photo) {
+                $path = $photo->store('photos', 'public');
+
+                $hotel->photos()->create(['path' => $path]);
+            }
+        }
+
+        return redirect()->route('hotels.index')->with('success', 'Hotel created successfully');
     }
 
     /**
