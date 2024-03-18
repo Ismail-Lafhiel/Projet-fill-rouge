@@ -198,13 +198,14 @@
                                                                 class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show</a>
                                                         </li>
                                                         <li>
-                                                            <a href="#"
+                                                            <a href="{{ route('rooms.edit', $room->id) }}"
                                                                 class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
                                                         </li>
                                                     </ul>
                                                     <a id="deleteButton" data-modal-target="deleteModal"
                                                         data-modal-toggle="deleteModal" data-record-id="1"
-                                                        data-action="#"
+                                                        data-record-id="{{ $room->id }}"
+                                                        data-action="{{ route('rooms.destroy', $room->id) }}"
                                                         class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                                         Delete
                                                     </a>
@@ -344,7 +345,7 @@
                                     d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                                     clip-rule="evenodd"></path>
                             </svg>
-                            Add new hotel
+                            Add new room
                         </button>
                     </form>
                 </div>

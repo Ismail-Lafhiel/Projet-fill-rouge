@@ -65,15 +65,18 @@ class HotelController extends Controller
      */
     public function edit(Hotel $hotel)
     {
-        //
+        $locations = Location::all();
+        return view("hotels.edit", compact("hotel", "locations"));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Hotel $hotel)
+    public function update(HotelRequest $request, Hotel $hotel)
     {
-        //
+        $hotel->update($request->validated());
+
+        return redirect()->route('hotels.index')->with('success', "{$hotel->name} updated successfully");
     }
 
     /**
@@ -81,6 +84,8 @@ class HotelController extends Controller
      */
     public function destroy(Hotel $hotel)
     {
-        //
+        $hotel->delete();
+        session()->flash('success', "{$hotel->name} deleted successfully");
+        return response()->json(['success' => true, 'message' => "{$hotel->name} deleted successfully"]);
     }
 }

@@ -192,13 +192,14 @@
                                                                 class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show</a>
                                                         </li>
                                                         <li>
-                                                            <a href="#"
+                                                            <a href="{{ route('hotels.edit', $hotel->id) }}"
                                                                 class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
                                                         </li>
                                                     </ul>
                                                     <a id="deleteButton" data-modal-target="deleteModal"
                                                         data-modal-toggle="deleteModal" data-record-id="1"
-                                                        data-action="#"
+                                                        data-record-id="{{ $hotel->id }}"
+                                                        data-action="{{ route('hotels.destroy', $hotel->id) }}"
                                                         class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                                         Delete
                                                     </a>

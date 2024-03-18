@@ -59,7 +59,6 @@ class RoomController extends Controller
      */
     public function show(Room $room)
     {
-        //
     }
 
     /**
@@ -67,15 +66,18 @@ class RoomController extends Controller
      */
     public function edit(Room $room)
     {
-        //
+        $hotels = Hotel::all();
+        return view("rooms.edit", compact("room", "hotels"));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Room $room)
+    public function update(RoomRequest $request, Room $room)
     {
-        //
+        $room->update($request->validated());
+
+        return redirect()->route('rooms.index')->with('success', "{$room->reference} updated successfully");
     }
 
     /**
@@ -83,6 +85,8 @@ class RoomController extends Controller
      */
     public function destroy(Room $room)
     {
-        //
+        $room->delete();
+        session()->flash('success', "{$room->reference} deleted successfully");
+        return response()->json(['success' => true, 'message' => "{$room->reference} deleted successfully"]);
     }
 }
