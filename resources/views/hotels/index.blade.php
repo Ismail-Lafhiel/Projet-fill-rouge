@@ -118,7 +118,7 @@
                                             <path clip-rule="evenodd" fill-rule="evenodd"
                                                 d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                                         </svg>
-                                        Add Event
+                                        Add Hotel
                                     </button>
 
                                     <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown"
@@ -283,9 +283,9 @@
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hotel
                                     Location</label>
                                 <select name="location_id" id="location_id">
-                                    <option value="1">Marrakech</option>
-                                    <option value="2">NYC</option>
-                                    <option value="3">Berlin</option>
+                                    @foreach ($locations as $location)
+                                        <option value="{{$location->id}}">{{$location->city}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div>

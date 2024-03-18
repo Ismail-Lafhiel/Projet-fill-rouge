@@ -23,16 +23,10 @@
             </div>
             <nav :class="{ 'block': open, 'hidden': !open }"
                 class="flex-grow px-4 pb-4 md:block md:pb-0 md:overflow-y-auto">
-                {{-- @role('admin')
-                    <x-admin-link :active="request()->routeIs('admin.roles.index')" href="{{ route('admin.roles.index') }}">Roles
+                    <x-admin-link :active="request()->routeIs('hotels.index')" href="{{ route('hotels.index') }}">Hotels
                     </x-admin-link>
-                    <x-admin-link :active="request()->routeIs('admin.permissions.index')" href="{{ route('admin.permissions.index') }}">Permissions
+                    <x-admin-link :active="request()->routeIs('rooms.index')" href="{{ route('rooms.index') }}">Rooms
                     </x-admin-link>
-                    <x-admin-link :active="request()->routeIs('admin.users.index')" href="{{ route('admin.users.index') }}">Users
-                    </x-admin-link>
-                    <x-admin-link :active="request()->routeIs('admin.categories.index')" href="{{ route('admin.categories.index') }}">Categories
-                    </x-admin-link>
-                @endrole --}}
                 {{-- @role('admin|organizer')
                     <x-admin-link :active="request()->routeIs('events.index')" href="{{ route('events.index') }}">Events</x-admin-link>
                 @endrole --}}

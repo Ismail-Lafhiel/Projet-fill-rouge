@@ -18,4 +18,13 @@ class Room extends Model
         'room_type',
         'hotel_id'
     ];
+
+    public function photos()
+    {
+        return $this->hasMany(Photo::class);
+    }
+    public function hotel()
+    {
+        return $this->belongsTo(Hotel::class);
+    }
 }

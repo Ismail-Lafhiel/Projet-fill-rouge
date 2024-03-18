@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\HotelController;
+use App\Http\Controllers\LocationController;
+use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,8 +49,12 @@ Route::post('/change-password', [AuthController::class, 'changePassword'])->name
 Route::middleware([
     'auth'
 ])->group(function () {
+    // locations routes
+    Route::resource('locations', LocationController::class);
     // hotel routes
     Route::resource('hotels', HotelController::class);
+    // rooms routes
+    Route::resource('rooms', RoomController::class);
 
     // admin dashboard
     Route::get('/dashboard', function () {

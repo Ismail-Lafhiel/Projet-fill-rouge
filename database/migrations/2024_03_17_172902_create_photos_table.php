@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('photos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('hotel_id')->constrained()->onDelete('cascade')->onUpdate("cascade");
+            $table->unsignedBigInteger("hotel_id")->nullable();
+            $table->foreign('hotel_id')->references("id")->on("hotels")->onDelete('cascade')->onUpdate("cascade");
             $table->string('path');
             $table->timestamps();
         });

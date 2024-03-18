@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\HotelRequest;
 use App\Models\Hotel;
+use App\Models\Location;
 use Illuminate\Http\Request;
 
 class HotelController extends Controller
@@ -14,7 +15,8 @@ class HotelController extends Controller
     public function index()
     {
         $hotels = Hotel::orderBy("created_at", "desc")->paginate(10);
-        return view("hotels.index", compact('hotels'));
+        $locations = Location::all();
+        return view("hotels.index", compact('hotels', 'locations'));
     }
 
     /**
