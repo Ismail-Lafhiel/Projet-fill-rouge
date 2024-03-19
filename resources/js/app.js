@@ -1,6 +1,6 @@
 import './bootstrap';
 import 'flowbite';
-
+import Datepicker from 'flowbite-datepicker/Datepicker';
 
 // delete functionality
 document.addEventListener('DOMContentLoaded', function () {

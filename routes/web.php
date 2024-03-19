@@ -43,7 +43,9 @@ Route::get('/reset-password', function () {
 Route::post('/change-password', [AuthController::class, 'changePassword'])->name('password.change');
 
 
-
+Route::get("/home", function(){
+    return view("home");
+});
 
 
 Route::middleware([
