@@ -20,14 +20,6 @@ class HotelController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(HotelRequest $request)
@@ -43,7 +35,7 @@ class HotelController extends Controller
 
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {
-                $path = $photo->store('photos', 'public');
+                $path = $photo->store('hotel_photos', 'public');
 
                 $hotel->photos()->create(['path' => $path]);
             }
@@ -57,7 +49,7 @@ class HotelController extends Controller
      */
     public function show(Hotel $hotel)
     {
-        //
+        return view("hotels.show", compact("hotel"));
     }
 
     /**

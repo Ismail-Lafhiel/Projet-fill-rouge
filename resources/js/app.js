@@ -57,3 +57,16 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     });
 });
+
+// select photos by clicking:
+document.addEventListener('DOMContentLoaded', function () {
+    const thumbnailImages = document.querySelectorAll('.thumbnail');
+    const featuredImage = document.getElementById('featuredImage');
+
+    thumbnailImages.forEach(function (thumbnail) {
+        thumbnail.addEventListener('click', function () {
+            const thumbnailSrc = thumbnail.getAttribute('src');
+            featuredImage.setAttribute('src', thumbnailSrc);
+        });
+    });
+});

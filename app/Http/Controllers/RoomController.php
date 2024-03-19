@@ -20,14 +20,6 @@ class RoomController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(RoomRequest $request)
@@ -46,7 +38,7 @@ class RoomController extends Controller
 
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {
-                $path = $photo->store('room_photos');
+                $path = $photo->store('room_photos', 'public');
                 $room->photos()->create(['path' => $path]);
             }
         }
@@ -59,6 +51,7 @@ class RoomController extends Controller
      */
     public function show(Room $room)
     {
+        return view("rooms.show", compact("room"));
     }
 
     /**
