@@ -29,6 +29,7 @@ class HotelController extends Controller
             'location_id' => $request->location_id,
             'number_of_rooms' => $request->number_of_rooms,
             'description' => $request->description,
+            'rating' => $request->rating,
         ]);
 
         $hotel->save();

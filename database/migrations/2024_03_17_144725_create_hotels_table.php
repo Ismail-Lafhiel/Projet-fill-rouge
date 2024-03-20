@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->bigInteger('number_of_rooms');
             $table->longText('description');
+            $table->float("rating");
             $table->timestamps();
         });
     }

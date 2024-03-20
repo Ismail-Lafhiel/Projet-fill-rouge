@@ -31,14 +31,17 @@
             <div class="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
                 <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
                     <li>
-                        <x-header-link :active="request()->routeIs('welcome')" href="{{ route('welcome') }}">Home
+                        <x-header-link :active="request()->routeIs('home')" href="{{ route('home') }}">Home
                         </x-header-link>
                     </li>
                     <li>
-                        {{-- <x-header-link :active="request()->routeIs('')" href="{{ route('') }}">About
-                        </x-header-link> --}}
+                        <x-header-link :active="request()->routeIs('destinations')" href="{{ route('destinations') }}">Destinations
+                        </x-header-link>
                     </li>
-                    
+                    <li>
+                        <x-header-link :active="request()->routeIs('hotels.view')" href="{{ route('hotels.view') }}">Hotels
+                        </x-header-link>
+                    </li>
                 </ul>
             </div>
         </div>

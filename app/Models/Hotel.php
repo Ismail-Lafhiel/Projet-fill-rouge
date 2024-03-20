@@ -13,6 +13,7 @@ class Hotel extends Model
         'location_id',
         'number_of_rooms',
         'description',
+        'rating'
     ];
 
     public function photos()

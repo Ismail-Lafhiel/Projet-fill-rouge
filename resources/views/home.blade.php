@@ -48,15 +48,18 @@
             Trending destinations</h2>
         <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 text-sm md:text-md lg:text-lg">Most popular choices
             for travellers from Morocco</p>
-        <div class="-m-1 flex flex-wrap md:-m-2">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
             @foreach ($locations as $location)
-                <div class="flex w-1/3 flex-wrap">
+                <div
+                    class="relative isolate flex flex-col justify-end overflow-hidden rounded-2xl px-8 pb-8 pt-40 w-[320px] h-[400px] mx-auto mt-4">
                     @foreach ($location->photos as $photo)
-                        <div class="w-full p-1 md:p-2">
-                            <img alt="gallery" class="block h-full w-full rounded-lg object-cover object-center"
-                                src="{{ $photo->path }}" />
-                        </div>
+                        <img src="{{ $photo->path }}" alt=""
+                            class="absolute inset-0 h-full w-full object-cover">
                     @endforeach
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40"></div>
+                    <h3 class="z-10 mt-3 text-3xl font-bold text-white">
+                        {{ $location->city . ', ' . $location->country }}
+                    </h3>
                 </div>
             @endforeach
         </div>

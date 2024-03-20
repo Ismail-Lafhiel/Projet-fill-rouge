@@ -1,9 +1,9 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\MainContentController;
 use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,7 +44,9 @@ Route::get('/reset-password', function () {
 Route::post('/change-password', [AuthController::class, 'changePassword'])->name('password.change');
 
 
-Route::get("/home", [HomeController::class, 'index'])->name("home");
+Route::get("/home", [MainContentController::class, 'index'])->name("home");
+Route::get("/destinations", [MainContentController::class, 'destinations'])->name("destinations");
+Route::get("/hotels-all", [MainContentController::class, 'hotels'])->name("hotels.view");
 
 
 Route::middleware([

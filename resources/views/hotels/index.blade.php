@@ -159,6 +159,7 @@
                                         <th scope="col" class="px-4 py-3">Name</th>
                                         <th scope="col" class="px-4 py-3">location</th>
                                         <th scope="col" class="px-4 py-3">number of rooms</th>
+                                        <th scope="col" class="px-4 py-3">rating</th>
                                         <th scope="col" class="px-4 py-3">
                                             <span class="sr-only">Actions</span>
                                         </th>
@@ -173,6 +174,7 @@
                                                 {{$hotel->name}}</th>
                                             <td class="px-4 py-3">{{$hotel->location->city}}, {{$hotel->location->country}}</td>
                                             <td class="px-4 py-3">{{$hotel->number_of_rooms}}</td>
+                                            <td class="px-4 py-3">{{$hotel->rating}}/5 stars</td>
                                             <td class="px-4 py-3 flex items-center justify-end">
                                                 <button id="{{$hotel->id}}-dropdown-button" data-dropdown-toggle="{{$hotel->id}}-dropdown"
                                                     class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
@@ -262,13 +264,22 @@
                         enctype="multipart/form-data">
                         @csrf
                         <div class="grid gap-6 mb-6 md:grid-cols-2">
-                            <div class="sm:col-span-2">
+                            <div>
                                 <label for="name"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hotel
                                     Name</label>
                                 <input type="text" name="name" id="name"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                     placeholder="Type hotel name">
+
+                            </div>
+                            <div>
+                                <label for="rating"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hotel
+                                    Rating</label>
+                                <input type="text" name="rating" id="rating"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                    placeholder="Type hotel rating">
 
                             </div>
                             <div class="sm:col-span-2">
