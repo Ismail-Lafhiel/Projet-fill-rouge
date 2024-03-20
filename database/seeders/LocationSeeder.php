@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Location;
+use App\Models\Photo;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -14,15 +16,48 @@ class LocationSeeder extends Seeder
     public function run(): void
     {
         $locations = [
-            ['city' => 'Rabat', 'country' => 'Morocco'],
-            ['city' => 'Marrakech', 'country' => 'Morocco'],
-            ['city' => 'Casablanca', 'country' => 'Morocco'],
-            ['city' => 'Paris', 'country' => 'France'],
-            ['city' => 'London', 'country' => 'United Kingdom'],
+            [
+                'city' => 'Rabat',
+                'country' => 'Morocco',
+                'photo_url' => 'https://picsum.photos/200/300',
+            ],
+            [
+                'city' => 'Marrakech',
+                'country' => 'Morocco',
+                'photo_url' => 'https://picsum.photos/200/300', 
+            ],
+            [
+                'city' => 'Casablanca',
+                'country' => 'Morocco',
+                'photo_url' => 'https://picsum.photos/200/300',
+            ],
+            [
+                'city' => 'Paris',
+                'country' => 'France',
+                'photo_url' => 'https://picsum.photos/200/300',
+            ],
+            [
+                'city' => 'NYC',
+                'country' => 'USA',
+                'photo_url' => 'https://picsum.photos/200/300',
+            ],
+            [
+                'city' => 'London',
+                'country' => 'UK',
+                'photo_url' => 'https://picsum.photos/200/300',
+            ],
         ];
 
-        foreach ($locations as $location) {
-            DB::table('locations')->insert($location);
+        foreach ($locations as $locationData) {
+            $location = Location::create([
+                'city' => $locationData['city'],
+                'country' => $locationData['country'],
+            ]);
+
+            if (isset($locationData['photo_url'])) {
+                $photo = new Photo(['path' => $locationData['photo_url']]);
+                $location->photos()->save($photo);
+            }
         }
     }
 }

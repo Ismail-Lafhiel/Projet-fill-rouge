@@ -44,40 +44,26 @@
         </form>
     </section>
     <section class="container mx-auto px-5 py-2 lg:px-32 lg:pt-24">
-        <h2 class="max-w-2xl mb-4 text-xl font-bold tracking-tight leading-none md:text-2xl xl:text-3xl text-gray-900">Trending destinations</h2>
-        <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 text-sm md:text-md lg:text-lg">Most popular choices for travellers from Morocco</p>
+        <h2 class="max-w-2xl mb-4 text-xl font-bold tracking-tight leading-none md:text-2xl xl:text-3xl text-gray-900">
+            Trending destinations</h2>
+        <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 text-sm md:text-md lg:text-lg">Most popular choices
+            for travellers from Morocco</p>
         <div class="-m-1 flex flex-wrap md:-m-2">
-            <div class="flex w-1/2 flex-wrap">
-                <div class="w-1/2 p-1 md:p-2">
-                    <img alt="gallery" class="block h-full w-full rounded-lg object-cover object-center"
-                        src="https://tecdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(70).webp" />
+            @foreach ($locations as $location)
+                <div class="flex w-1/3 flex-wrap">
+                    @foreach ($location->photos as $photo)
+                        <div class="w-full p-1 md:p-2">
+                            <img alt="gallery" class="block h-full w-full rounded-lg object-cover object-center"
+                                src="{{ $photo->path }}" />
+                        </div>
+                    @endforeach
                 </div>
-                <div class="w-1/2 p-1 md:p-2">
-                    <img alt="gallery" class="block h-full w-full rounded-lg object-cover object-center"
-                        src="https://tecdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(72).webp" />
-                </div>
-                <div class="w-full p-1 md:p-2">
-                    <img alt="gallery" class="block h-full w-full rounded-lg object-cover object-center"
-                        src="https://tecdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(73).webp" />
-                </div>
-            </div>
-            <div class="flex w-1/2 flex-wrap">
-                <div class="w-full p-1 md:p-2">
-                    <img alt="gallery" class="block h-full w-full rounded-lg object-cover object-center"
-                        src="https://tecdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(74).webp" />
-                </div>
-                <div class="w-1/2 p-1 md:p-2">
-                    <img alt="gallery" class="block h-full w-full rounded-lg object-cover object-center"
-                        src="https://tecdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(75).webp" />
-                </div>
-                <div class="w-1/2 p-1 md:p-2">
-                    <img alt="gallery" class="block h-full w-full rounded-lg object-cover object-center"
-                        src="https://tecdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(77).webp" />
-                </div>
-            </div>
+            @endforeach
         </div>
         <div class="mt-5 mb-10 mx-auto text-center">
-            <button type="button" class="text-primary-500 bg-transparent hover:bg-primary-800 focus:ring-4 border-2 border-primary-500 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 hover:text-white">View All Destinations</button>
+            <button type="button"
+                class="text-primary-500 bg-transparent hover:bg-primary-800 focus:ring-4 border-2 border-primary-500 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 hover:text-white">View
+                All Destinations</button>
         </div>
     </section>
     <x-footer />

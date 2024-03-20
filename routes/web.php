@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\RoomController;
@@ -43,9 +44,7 @@ Route::get('/reset-password', function () {
 Route::post('/change-password', [AuthController::class, 'changePassword'])->name('password.change');
 
 
-Route::get("/home", function(){
-    return view("home");
-});
+Route::get("/home", [HomeController::class, 'index'])->name("home");
 
 
 Route::middleware([
