@@ -42,6 +42,10 @@
                         <x-header-link :active="request()->routeIs('hotels.view')" href="{{ route('hotels.view') }}">Hotels
                         </x-header-link>
                     </li>
+                    <li>
+                        <x-header-link :active="request()->routeIs('rooms.view')" href="{{ route('rooms.view') }}">Rooms
+                        </x-header-link>
+                    </li>
                 </ul>
             </div>
         </div>

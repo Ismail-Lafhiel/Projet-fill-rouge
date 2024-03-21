@@ -161,6 +161,7 @@
                                         <th scope="col" class="px-4 py-3">room type</th>
                                         <th scope="col" class="px-4 py-3">Availability</th>
                                         <th scope="col" class="px-4 py-3">Hotel</th>
+                                        <th scope="col" class="px-4 py-3">rating</th>
                                         <th scope="col" class="px-4 py-3">
                                             <span class="sr-only">Actions</span>
                                         </th>
@@ -178,6 +179,7 @@
                                             <td class="px-4 py-3">{{ $room->room_type }}</td>
                                             <td class="px-4 py-3">{{ $room->availability }}</td>
                                             <td class="px-4 py-3">{{ $room->hotel->name }}</td>
+                                            <td class="px-4 py-3">{{ $room->rating }}/5 stars</td>
                                             <td class="px-4 py-3 flex items-center justify-end">
                                                 <button id="{{ $room->id }}-dropdown-button"
                                                     data-dropdown-toggle="{{ $room->id }}-dropdown"
@@ -328,13 +330,20 @@
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                     placeholder="Type number of rooms">
                             </div>
-                            <div class="sm:col-span-2">
+                            <div>
                                 <label for="photos"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Room
                                     Photos</label>
                                 <input
                                     class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                                     id="photos" name="photos[]" type="file" multiple>
+                            </div>
+                            <div>
+                                <label for="rating"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rating</label>
+                                <input type="text" name="rating" id="rating"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                    placeholder="Type the rating">
                             </div>
                         </div>
                         <button type="submit"

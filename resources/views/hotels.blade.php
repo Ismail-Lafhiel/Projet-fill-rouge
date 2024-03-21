@@ -15,7 +15,7 @@
                                 @break 
                             @endforeach
                         @else
-                                <img class="h-[250px] w-full" src="https://images.unsplash.com/photo-1570797197190-8e003a00c846?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=968&q=80" alt="Placeholder" />
+                                <img class="h-[250px] w-full" src="{{ asset("storage/place_holder_img.jpg") }}" alt="Placeholder" />
                         @endif
                         <div class="absolute bottom-3 left-3 inline-flex items-center rounded-lg bg-white p-2 shadow-md">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20"

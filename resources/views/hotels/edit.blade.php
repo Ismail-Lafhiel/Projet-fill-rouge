@@ -109,18 +109,16 @@
                                 <label for="name"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hotel
                                     Name</label>
-                                <input type="text" name="name" id="name" value="{{$hotel->name}}"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="Type hotel name">
+                                <input type="text" name="name" id="name" value="{{ $hotel->name }}"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
 
                             </div>
                             <div>
                                 <label for="rating"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hotel
                                     Rating</label>
-                                <input type="text" name="rating" id="rating"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="Type hotel rating">
+                                <input type="text" name="rating" id="rating" value="{{ $hotel->rating }}"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
 
                             </div>
                             <div class="sm:col-span-2">
@@ -128,8 +126,7 @@
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hotel
                                     Description</label>
                                 <textarea id="description" name="description" rows="4"
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="Type event description">{{$hotel->description}}</textarea>
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ $hotel->description }}</textarea>
                             </div>
                             <div>
                                 <label for="location_id"
@@ -145,9 +142,9 @@
                                 <label for="number_of_rooms"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Number of
                                     Rooms</label>
-                                <input type="text" name="number_of_rooms" id="number_of_rooms" value="{{$hotel->number_of_rooms}}"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="Type number of rooms">
+                                <input type="text" name="number_of_rooms" id="number_of_rooms"
+                                    value="{{ $hotel->number_of_rooms }}"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                             </div>
                             <div class="sm:col-span-2">
                                 <label for="photos"

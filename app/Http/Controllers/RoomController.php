@@ -32,6 +32,7 @@ class RoomController extends Controller
             'number_of_beds' => $request->number_of_beds,
             'room_type' => $request->room_type,
             'price' => $request->price,
+            'rating' => $request->rating,
         ]);
 
         $room->save();
