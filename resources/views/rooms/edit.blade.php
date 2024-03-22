@@ -116,7 +116,9 @@
                                 <label for="hotel_id"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hotel
                                     Name</label>
-                                <select name="hotel_id" id="hotel_id">
+                                <select name="hotel_id" id="hotel_id"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                    <option value="#">Select a hotel for this room</option>
                                     @foreach ($hotels as $hotel)
                                         <option value="{{ $hotel->id }}">{{ $hotel->name }}</option>
                                     @endforeach
@@ -134,7 +136,9 @@
                                 <label for="availability"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Room
                                     Availability</label>
-                                <select name="availability" id="availability">
+                                <select name="availability" id="availability"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                    <option value="#">Select room status</option>
                                     <option value="available">Available</option>
                                     <option value="not available">Not Available</option>
                                 </select>

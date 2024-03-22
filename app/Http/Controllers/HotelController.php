@@ -27,7 +27,6 @@ class HotelController extends Controller
         $hotel = new Hotel([
             'name' => $request->name,
             'location_id' => $request->location_id,
-            'number_of_rooms' => $request->number_of_rooms,
             'description' => $request->description,
             'rating' => $request->rating,
         ]);

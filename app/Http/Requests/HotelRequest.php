@@ -25,7 +25,6 @@ class HotelRequest extends FormRequest
             'name' => 'required|string|max:255',
             'rating' => 'required|numeric|between:0,5',
             'location_id' => 'required|exists:locations,id',
-            'number_of_rooms' => 'required|integer|min:1',
             'description' => 'nullable|string',
         ];
     }

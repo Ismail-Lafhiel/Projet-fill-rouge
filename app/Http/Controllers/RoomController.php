@@ -37,6 +37,11 @@ class RoomController extends Controller
 
         $room->save();
 
+        // Update the number_of_rooms attribute of the associated hotel
+        $hotel = Hotel::findOrFail($request->hotel_id);
+        $hotel->number_of_rooms = $hotel->rooms()->count();
+        $hotel->save();
+
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {
                 $path = $photo->store('room_photos', 'public');
@@ -46,7 +51,6 @@ class RoomController extends Controller
 
         return redirect()->back()->with('success', 'Room created successfully.');
     }
-
     /**
      * Display the specified resource.
      */
