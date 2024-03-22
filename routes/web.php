@@ -18,9 +18,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+// Route::get('/', function () {
+//     return view('welcome');
+// })->name('welcome');
 
 // auth routes
 Route::get('/login', [AuthController::class, 'showLogin'])->name("login");
@@ -44,7 +44,7 @@ Route::get('/reset-password', function () {
 Route::post('/change-password', [AuthController::class, 'changePassword'])->name('password.change');
 
 
-Route::get("/home", [MainContentController::class, 'index'])->name("home");
+Route::get("/", [MainContentController::class, 'index'])->name("home");
 Route::get("/destinations", [MainContentController::class, 'destinations'])->name("destinations");
 Route::get("/hotels-all", [MainContentController::class, 'hotels'])->name("hotels.view");
 Route::get("/hotel/{hotel}", [MainContentController::class, 'hotel'])->name("hotel.view");
@@ -54,7 +54,8 @@ Route::get("/room/{room}", [MainContentController::class, 'room'])->name("room.v
 
 
 Route::middleware([
-    'auth'
+    'auth',
+    'admin'
 ])->group(function () {
     // locations routes
     Route::resource('locations', LocationController::class);
@@ -66,5 +67,5 @@ Route::middleware([
     // admin dashboard
     Route::get('/dashboard', function () {
         return view("admin.index");
-    });
+    })->name("admin.dashboard");
 });

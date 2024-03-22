@@ -38,20 +38,23 @@ class AuthController extends Controller
         $userData = $request->validated();
         $this->userRepository->create($userData);
 
-        return redirect()->route('welcome');
+        return redirect()->route('login')->with("success", "Your account created successfully. You can login to it");
     }
 
     // login method
     public function login(LoginRequest $request)
-    {
-        $credentials = $request->only('email', 'password');
+{
+    $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials)) {
-            return redirect()->route('welcome');
+    if (Auth::attempt($credentials)) {
+        if (Auth::user()->role === 'admin') {
+            return redirect()->route('admin.dashboard');
         }
-
-        return back()->withErrors(['email' => 'Invalid credentials']);
+        return redirect()->route('home');
     }
+
+    return back()->withErrors(['email' => 'Invalid credentials']);
+}
 
     // logout method
     public function logout()
