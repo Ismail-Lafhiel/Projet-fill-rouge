@@ -24,9 +24,14 @@ class MainContentController extends Controller
         $hotels = Hotel::with('photos')->orderBy("created_at", "desc")->paginate(10);
         return view("hotels", compact("hotels"));
     }
+    public function hotel(Hotel $hotel){
+        return view("hotel", compact("hotel"));
+    }
     public function rooms(){
         $rooms = Room::with('photos')->orderBy("created_at", "desc")->paginate(10);
         return view("rooms", compact("rooms"));
     }
-    
+    public function room(Room $room){
+        return view("room", compact("room"));
+    }
 }

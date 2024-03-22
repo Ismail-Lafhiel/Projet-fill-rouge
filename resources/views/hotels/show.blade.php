@@ -47,13 +47,13 @@
                                     <div>
                                         <img id="featuredImage" class="h-auto max-w-full rounded-lg"
                                             src="{{ asset('storage/' . $hotel->photos->first()->path) }}"
-                                            alt="Featured Room Photo">
+                                            alt="Featured Hotel Photo">
                                     </div>
                                     <div class="grid grid-cols-5 gap-4">
                                         @foreach ($hotel->photos as $photo)
                                             <div>
                                                 <img class="thumbnail h-auto max-w-full rounded-lg"
-                                                    src="{{ asset('storage/' . $photo->path) }}" alt="Room Photo">
+                                                    src="{{ asset('storage/' . $photo->path) }}" alt="Hotel Photo">
                                             </div>
                                         @endforeach
                                     </div>

@@ -47,7 +47,10 @@ Route::post('/change-password', [AuthController::class, 'changePassword'])->name
 Route::get("/home", [MainContentController::class, 'index'])->name("home");
 Route::get("/destinations", [MainContentController::class, 'destinations'])->name("destinations");
 Route::get("/hotels-all", [MainContentController::class, 'hotels'])->name("hotels.view");
+Route::get("/hotel/{hotel}", [MainContentController::class, 'hotel'])->name("hotel.view");
 Route::get("/rooms-all", [MainContentController::class, 'rooms'])->name("rooms.view");
+Route::get("/room/{room}", [MainContentController::class, 'room'])->name("room.view");
+
 
 
 Route::middleware([
