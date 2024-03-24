@@ -69,3 +69,6 @@ Route::middleware([
         return view("admin.index");
     })->name("admin.dashboard");
 });
+
+
+Route::get('/{location}/hotels', [LocationController::class, 'showHotelsInLocation'])->name('hotels.location');
