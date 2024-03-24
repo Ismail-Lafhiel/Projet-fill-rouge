@@ -50,7 +50,8 @@
                     <hr class="my-8" />
                     <div class="flex flex-wrap gap-4">
                         <button type="button"
-                            class="min-w-[200px] px-4 py-3 bg-primary-800 hover:bg-primary-900 text-white text-sm font-bold rounded">View available rooms</button>
+                            class="min-w-[200px] px-4 py-3 bg-primary-800 hover:bg-primary-900 text-white text-sm font-bold rounded">View
+                            available rooms</button>
                         <button type="button"
                             class="min-w-[200px] px-4 py-2.5 border border-primary-800 bg-transparent hover:bg-primary-50 text-primary-800 text-sm font-bold rounded">Continue
                             browzing</button>
@@ -59,21 +60,72 @@
             </div>
             <div class="mt-24 max-w-4xl">
                 <ul class="flex border-b">
-                    <li
+                    <li id="descriptionTab"
                         class="text-gray-800 font-bold text-sm bg-gray-100 py-3 px-8 border-b-2 border-gray-800 cursor-pointer transition-all">
-                        Description</li>
-                    <li
+                        Description
+                    </li>
+                    <li id="roomsTab"
                         class="text-gray-400 font-bold text-sm hover:bg-gray-100 py-3 px-8 cursor-pointer transition-all">
-                        Rooms</li>
+                        Rooms
+                    </li>
                 </ul>
-                <div class="mt-8">
+                <div id="descriptionSection" class="mt-8">
                     <h3 class="text-lg font-bold text-gray-800">Hotel Description</h3>
-                    <p class="text-sm text-gray-400 mt-4">{{ $hotel->description }}
-                    </p>
+                    <p class="text-sm text-gray-400 mt-4">{{ $hotel->description }}</p>
                 </div>
-                
+                <div id="roomsSection" class="mt-8 hidden">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        @foreach ($rooms as $room)
+                            <div class="cursor-pointer rounded-xl bg-white p-3 shadow-lg hover:shadow-xl"
+                                onclick="window.location.href = '{{ route('room.view', $room->id) }}'">
+                                <div class="relative flex items-end overflow-hidden rounded-xl">
+                                    @if ($room->photos->isNotEmpty())
+                                        @foreach ($room->photos as $photo)
+                                            <img class="h-[250px] w-full" src="{{ asset('storage/' . $photo->path) }}"
+                                                alt="Room Photo" />
+                                        @break
+                                    @endforeach
+                                @else
+                                    <img class="h-[250px] w-full" src="{{ asset('storage/place_holder_img.jpg') }}"
+                                        alt="Placeholder" />
+                                @endif
+                                <div
+                                    class="absolute bottom-3 left-3 inline-flex items-center rounded-lg bg-white p-2 shadow-md">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400"
+                                        viewBox="0 0 20 20" fill="currentColor">
+                                        <path
+                                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                    </svg>
+
+                                    <span class="ml-1 text-sm text-slate-400">{{ $room->rating }}</span>
+                                </div>
+                            </div>
+
+                            <div class="mt-1 p-2">
+                                <h2 class="text-slate-700">{{ $room->room_type }}</h2>
+                                <p class="mt-1 text-sm text-slate-400">{{ $room->hotel->name }}</p>
+                                <div class="mt-3 flex items-end justify-between">
+                                    <p>
+                                        <span
+                                            class="text-lg font-bold text-primary-500">${{ $room->price }}</span>
+                                        <span class="text-sm text-slate-400">/night</span>
+                                    </p>
+
+                                    <div
+                                        class="group inline-flex rounded-xl bg-primary-100 p-2 hover:bg-primary-200">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="h-4 w-4 text-primary-400 group-hover:text-primary-500"
+                                            viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                    @endforeach
+                </div>
             </div>
         </div>
-    </section>
-    <x-footer />
+    </div>
+</section>
+<x-footer />
 </x-guest-layout>

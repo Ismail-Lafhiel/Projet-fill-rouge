@@ -71,4 +71,4 @@ Route::middleware([
 });
 
 
-Route::get('/{location}/hotels', [LocationController::class, 'showHotelsInLocation'])->name('hotels.location');
+Route::get('/{location}/hotels', [MainContentController::class, 'showHotelsInDestination'])->name('hotels.location');

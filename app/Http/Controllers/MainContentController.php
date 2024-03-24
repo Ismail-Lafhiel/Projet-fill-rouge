@@ -20,13 +20,22 @@ class MainContentController extends Controller
 
         return view("destinations", compact('locations'));
     }
+    public function showHotelsInDestination($locationName)
+    {
+        $location = Location::where('city', $locationName)->firstOrFail();
+
+        $hotels = $location->hotels;
+
+        return view('hotels_in_location', compact('hotels', 'location'));
+    }
 
     public function hotels(){
         $hotels = Hotel::with('photos')->orderBy('rating', 'desc')->paginate(10);
         return view("hotels", compact("hotels"));
     }
     public function hotel(Hotel $hotel){
-        return view("hotel", compact("hotel"));
+        $rooms = $hotel->rooms()->paginate(10);
+        return view("hotel", compact("hotel", "rooms"));
     }
     public function rooms(){
         $rooms = Room::with('photos')->orderBy('rating', 'desc')->paginate(10);

@@ -8,7 +8,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach ($rooms as $room)
                 <div class="cursor-pointer rounded-xl bg-white p-3 shadow-lg hover:shadow-xl"
-                onclick="window.location.href = '{{ route('room.view', $room->id) }}'">
+                    onclick="window.location.href = '{{ route('room.view', $room->id) }}'">
                     <div class="relative flex items-end overflow-hidden rounded-xl">
                         @if ($room->photos->isNotEmpty())
                             @foreach ($room->photos as $photo)

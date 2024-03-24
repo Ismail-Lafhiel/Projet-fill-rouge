@@ -70,3 +70,38 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+
+// description and rooms toggle switch
+document.addEventListener("DOMContentLoaded", function() {
+    const descriptionTab = document.getElementById("descriptionTab");
+    const roomsTab = document.getElementById("roomsTab");
+    const descriptionSection = document.getElementById("descriptionSection");
+    const roomsSection = document.getElementById("roomsSection");
+
+    roomsTab.addEventListener("click", function() {
+        // Hide description section and show rooms section
+        descriptionSection.classList.add("hidden");
+        roomsSection.classList.remove("hidden");
+
+        // Update active tab styles
+        descriptionTab.classList.remove("text-gray-800", "font-bold", "bg-gray-100", "border-b-2", "border-gray-800");
+        roomsTab.classList.add("text-gray-800", "font-bold", "bg-gray-100", "py-3", "px-8", "border-b-2", "border-gray-800", "cursor-pointer", "transition-all");
+
+        // Remove styles from inactive tab
+        descriptionTab.classList.remove("text-gray-400");
+    });
+
+    descriptionTab.addEventListener("click", function() {
+        // Hide rooms section and show description section
+        roomsSection.classList.add("hidden");
+        descriptionSection.classList.remove("hidden");
+
+        // Update active tab styles
+        roomsTab.classList.remove("text-gray-800", "font-bold", "bg-gray-100", "border-b-2", "border-gray-800");
+        descriptionTab.classList.add("text-gray-800", "font-bold", "bg-gray-100", "py-3", "px-8", "border-b-2", "border-gray-800", "cursor-pointer", "transition-all");
+
+        // Remove styles from inactive tab
+        roomsTab.classList.remove("text-gray-400");
+    });
+});
