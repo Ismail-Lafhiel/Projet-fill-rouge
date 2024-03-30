@@ -2,8 +2,12 @@
 
 namespace App\Providers;
 
+use App\Repositories\HotelRepository;
+use App\Repositories\Interfaces\HotelRepositoryInterface;
+use App\Repositories\Interfaces\RoomRepositoryInterface;
+use App\Repositories\Interfaces\UserRepositoryInterface;
+use App\Repositories\RoomRepository;
 use App\Repositories\UserRepository;
-use App\Repositories\UserRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -15,7 +19,15 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         $this->app->bind(
             UserRepositoryInterface::class,
-            UserRepository::class
+            UserRepository::class,
+        );
+        $this->app->bind(
+            HotelRepositoryInterface::class,
+            HotelRepository::class
+        );
+        $this->app->bind(
+            RoomRepositoryInterface::class,
+            RoomRepository::class
         );
     }
 

@@ -5,16 +5,23 @@ namespace App\Http\Controllers;
 use App\Http\Requests\HotelRequest;
 use App\Models\Hotel;
 use App\Models\Location;
-use Illuminate\Http\Request;
+use App\Repositories\Interfaces\HotelRepositoryInterface;
 
 class HotelController extends Controller
 {
+    protected $hotelRepository;
+
+    public function __construct(HotelRepositoryInterface $hotelRepository)
+    {
+        $this->hotelRepository = $hotelRepository;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $hotels = Hotel::orderBy("created_at", "desc")->paginate(10);
+        $hotels = $this->hotelRepository->getAll();
         $locations = Location::all();
         return view("hotels.index", compact('hotels', 'locations'));
     }
@@ -24,24 +31,16 @@ class HotelController extends Controller
      */
     public function store(HotelRequest $request)
     {
-        $hotel = new Hotel([
-            'name' => $request->name,
-            'location_id' => $request->location_id,
-            'description' => $request->description,
-            'rating' => $request->rating,
-        ]);
-
-        $hotel->save();
-
+        $data = $request->validated();
+        $hotel = $this->hotelRepository->create($data);
+        // Handle image upload
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {
                 $path = $photo->store('hotel_photos', 'public');
-
                 $hotel->photos()->create(['path' => $path]);
             }
         }
-
-        return redirect()->route('hotels.index')->with('success', 'Hotel created successfully');
+        return redirect()->route('hotels.index')->with('success', "{$hotel->name} created successfully");
     }
 
     /**
@@ -66,17 +65,23 @@ class HotelController extends Controller
      */
     public function update(HotelRequest $request, Hotel $hotel)
     {
-        $hotel->update($request->validated());
-
+        $data = $request->validated();
+        // Handle image upload
+        if ($request->hasFile('photos')) {
+            foreach ($request->file('photos') as $photo) {
+                $path = $photo->store('hotel_photos', 'public');
+                $hotel->photos()->create(['path' => $path]);
+            }
+        }
+        $this->hotelRepository->update($hotel, $data);
         return redirect()->route('hotels.index')->with('success', "{$hotel->name} updated successfully");
     }
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Hotel $hotel)
     {
-        $hotel->delete();
+        $this->hotelRepository->delete($hotel);
         session()->flash('success', "{$hotel->name} deleted successfully");
         return response()->json(['success' => true, 'message' => "{$hotel->name} deleted successfully"]);
     }
