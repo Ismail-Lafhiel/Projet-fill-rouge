@@ -15,9 +15,9 @@ class Room extends Model
         'number_of_beds',
         'description',
         'price',
-        'room_type',
         'hotel_id',
-        'rating'
+        'rating',
+        'room_type_id'
     ];
 
     public function photos()
@@ -27,5 +27,9 @@ class Room extends Model
     public function hotel()
     {
         return $this->belongsTo(Hotel::class);
+    }
+
+    public function roomType(){
+        return $this->belongsTo(RoomType::class);
     }
 }

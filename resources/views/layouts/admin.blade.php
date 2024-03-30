@@ -22,10 +22,12 @@
             </div>
             <nav :class="{ 'block': open, 'hidden': !open }"
                 class="flex-grow px-4 pb-4 md:block md:pb-0 md:overflow-y-auto">
-                    <x-admin-link :active="request()->routeIs('hotels.index')" href="{{ route('hotels.index') }}">Hotels
-                    </x-admin-link>
-                    <x-admin-link :active="request()->routeIs('rooms.index')" href="{{ route('rooms.index') }}">Rooms
-                    </x-admin-link>
+                <x-admin-link :active="request()->routeIs('admin.dashboard')" href="{{ route('admin.dashboard') }}">Dashboard
+                </x-admin-link>
+                <x-admin-link :active="request()->routeIs('hotels.index')" href="{{ route('hotels.index') }}">Hotels
+                </x-admin-link>
+                <x-admin-link :active="request()->routeIs('rooms.index')" href="{{ route('rooms.index') }}">Rooms
+                </x-admin-link>
                 {{-- @role('admin|organizer')
                     <x-admin-link :active="request()->routeIs('events.index')" href="{{ route('events.index') }}">Events</x-admin-link>
                 @endrole --}}

@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="mt-1 p-2">
-                    <h2 class="text-slate-700">{{ $room->room_type }}</h2>
+                    <h2 class="text-slate-700 text-md font-bold">{{ $room->roomType->name }} room</h2>
                     <p class="mt-1 text-sm text-slate-400">{{ $room->hotel->name }}</p>
                     <div class="mt-3 flex items-end justify-between">
                         <p>

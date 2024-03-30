@@ -27,7 +27,7 @@
                     <div class="flex flex-wrap items-start gap-4">
                         <div>
                             <div class="flex space-x-3">
-                                <h2 class="text-2xl font-extrabold text-gray-800">{{ $room->room_type }}</h2>
+                                <h2 class="text-2xl font-extrabold text-gray-800">{{ $room->roomType->name }} room</h2>
                                 @if ($room->availability == 'available')
                                     <p class="text-md text-green-400 capitalize mt-1.5">
                                         {{ $room->availability }}</p>

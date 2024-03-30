@@ -19,7 +19,6 @@ return new class extends Migration
             $table->enum('availability', ["available", 'not available']);
             $table->integer("number_of_beds");
             $table->longText("description");
-            $table->string("room_type");
             $table->float("price");
             $table->unsignedBigInteger("hotel_id");
             $table->foreign("hotel_id")->references('id')->on("hotels")->cascadeOnDelete()->cascadeOnUpdate();

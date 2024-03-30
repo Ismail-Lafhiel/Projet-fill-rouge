@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RoomRequest;
 use App\Models\Hotel;
 use App\Models\Room;
+use App\Models\RoomType;
 use App\Repositories\Interfaces\RoomRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -21,25 +22,30 @@ class RoomController extends Controller
     {
         $rooms = $this->roomRepository->getAll();
         $hotels = Hotel::all();
-        return view("rooms.index", compact("rooms", "hotels"));
+        $room_types = RoomType::all();
+        return view("rooms.index", compact("rooms", "hotels", "room_types"));
     }
 
     public function store(RoomRequest $request)
     {
         $data = $request->validated();
         $room = $this->roomRepository->create($data);
+
+        // Handle image upload
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {
                 $path = $photo->store('room_photos', 'public');
                 $room->photos()->create(['path' => $path]);
             }
         }
+
         $hotel = Hotel::findOrFail($request->hotel_id);
         $hotel->number_of_rooms = $hotel->rooms()->count();
         $hotel->save();
 
         return redirect()->back()->with('success', 'Room created successfully.');
     }
+
 
     public function show(Room $room)
     {
@@ -49,12 +55,15 @@ class RoomController extends Controller
     public function edit(Room $room)
     {
         $hotels = Hotel::all();
-        return view("rooms.edit", compact("room", "hotels"));
+        $room_types = RoomType::all();
+        return view("rooms.edit", compact("room", "hotels", "room_types"));
     }
 
     public function update(RoomRequest $request, Room $room)
     {
         $data = $request->validated();
+        $this->roomRepository->update($room, $data);
+
         // Handle image upload
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {
@@ -62,9 +71,10 @@ class RoomController extends Controller
                 $room->photos()->create(['path' => $path]);
             }
         }
-        $this->roomRepository->update($room, $data);
+
         return redirect()->route('rooms.index')->with('success', "{$room->reference} updated successfully");
     }
+
 
     public function destroy(Room $room)
     {

@@ -82,6 +82,7 @@
                 </div>
             @endif
             <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
+
                 <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
                     <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
                         <div
@@ -117,7 +118,7 @@
                                             <path clip-rule="evenodd" fill-rule="evenodd"
                                                 d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                                         </svg>
-                                        Add Room
+                                        Add Hotel
                                     </button>
 
                                     <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown"
@@ -155,12 +156,9 @@
                                     class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                     <tr>
                                         <th scope="col" class="px-4 py-3">id</th>
-                                        <th scope="col" class="px-4 py-3">Reference</th>
-                                        <th scope="col" class="px-4 py-3">price</th>
-                                        <th scope="col" class="px-4 py-3">number of beds</th>
-                                        <th scope="col" class="px-4 py-3">room type</th>
-                                        <th scope="col" class="px-4 py-3">Availability</th>
-                                        <th scope="col" class="px-4 py-3">Hotel</th>
+                                        <th scope="col" class="px-4 py-3">Name</th>
+                                        <th scope="col" class="px-4 py-3">location</th>
+                                        <th scope="col" class="px-4 py-3">number of rooms</th>
                                         <th scope="col" class="px-4 py-3">rating</th>
                                         <th scope="col" class="px-4 py-3">
                                             <span class="sr-only">Actions</span>
@@ -168,21 +166,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($rooms as $room)
+                                    @foreach ($hotels as $hotel)
                                         <tr class="border-b dark:border-gray-700">
-                                            <td class="px-4 py-3">{{ $room->id }}</td>
+                                            <td class="px-4 py-3">{{$hotel->id}}</td>
                                             <th scope="row"
                                                 class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                {{ $room->reference }}</th>
-                                            <td class="px-4 py-3">{{ $room->price }}</td>
-                                            <td class="px-4 py-3">{{ $room->number_of_beds }}</td>
-                                            <td class="px-4 py-3">{{ $room->roomType->name }}</td>
-                                            <td class="px-4 py-3">{{ $room->availability }}</td>
-                                            <td class="px-4 py-3">{{ $room->hotel->name }}</td>
-                                            <td class="px-4 py-3">{{ $room->rating }}/5 stars</td>
+                                                {{$hotel->name}}</th>
                                             <td class="px-4 py-3 flex items-center justify-end">
-                                                <button id="{{ $room->id }}-dropdown-button"
-                                                    data-dropdown-toggle="{{ $room->id }}-dropdown"
+                                                <button id="{{$hotel->id}}-dropdown-button" data-dropdown-toggle="{{$hotel->id}}-dropdown"
                                                     class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
                                                     type="button">
                                                     <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
@@ -191,23 +182,23 @@
                                                             d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
                                                     </svg>
                                                 </button>
-                                                <div id="{{ $room->id }}-dropdown"
+                                                <div id="{{$hotel->id}}-dropdown"
                                                     class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                                                     <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                                                        aria-labelledby="{{ $room->id }}-dropdown-button">
+                                                        aria-labelledby="{{$hotel->id}}-dropdown-button">
                                                         <li>
-                                                            <a href="{{ route('rooms.show', $room->id) }}"
+                                                            <a href="{{ route('hotels.show', $hotel->id) }}"
                                                                 class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show</a>
                                                         </li>
                                                         <li>
-                                                            <a href="{{ route('rooms.edit', $room->id) }}"
+                                                            <a href="{{ route('hotels.edit', $hotel->id) }}"
                                                                 class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
                                                         </li>
                                                     </ul>
                                                     <a id="deleteButton" data-modal-target="deleteModal"
                                                         data-modal-toggle="deleteModal" data-record-id="1"
-                                                        data-record-id="{{ $room->id }}"
-                                                        data-action="{{ route('rooms.destroy', $room->id) }}"
+                                                        data-record-id="{{ $hotel->id }}"
+                                                        data-action="{{ route('hotels.destroy', $hotel->id) }}"
                                                         class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                                         Delete
                                                     </a>
@@ -232,7 +223,7 @@
                     <div
                         class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
                         <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                            Add Room
+                            Add Room Type
                         </h3>
                         <button type="button"
                             class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -266,92 +257,18 @@
                             </div>
                         </div>
                     @endif
-                    <form id="createForm" action="{{ route('rooms.store') }}" method="POST"
+                    <form id="createForm" action="" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="grid gap-6 mb-6 md:grid-cols-2">
                             <div>
-                                <label for="reference"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Room
-                                    Reference</label>
-                                <input type="text" name="reference" id="reference"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="Type room reference">
-
-                            </div>
-                            <div>
-                                <label for="hotel_id"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hotel
+                                <label for="name"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Room type
                                     Name</label>
-                                <select name="hotel_id" id="hotel_id"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                                    <option value="#">Select a hotel for this room</option>
-                                    @foreach ($hotels as $hotel)
-                                        <option value="{{ $hotel->id }}">{{ $hotel->name }}</option>
-                                    @endforeach
-                                </select>
+                                <input type="text" name="name" id="name"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                    placeholder="Type hotel name">
 
-                            </div>
-                            <div class="sm:col-span-2">
-                                <label for="description"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hotel
-                                    Description</label>
-                                <textarea id="description" name="description" rows="4"
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="Type event description"></textarea>
-                            </div>
-                            <div>
-                                <label for="availability"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Room
-                                    Availability</label>
-                                <select name="availability" id="availability"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                                    <option value="#">Select room status</option>
-                                    <option value="available">Available</option>
-                                    <option value="not available">Not Available</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label for="number_of_beds"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Number of
-                                    Beds</label>
-                                <input type="text" name="number_of_beds" id="number_of_beds"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="Type number of rooms">
-                            </div>
-                            <div>
-                                <label for="room_type"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Room
-                                    Type</label>
-                                <select name="room_type_id" id="room_type"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                                    <option value="#">Select the type of this room</option>
-                                    @foreach ($room_types as $room_type)
-                                        <option value="{{ $room_type->id }}">{{ $room_type->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div>
-                                <label for="price"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
-                                <input type="text" name="price" id="price"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="Type number of rooms">
-                            </div>
-                            <div>
-                                <label for="photos"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Room
-                                    Photos</label>
-                                <input
-                                    class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                    id="photos" name="photos[]" type="file" multiple>
-                            </div>
-                            <div>
-                                <label for="rating"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rating</label>
-                                <input type="text" name="rating" id="rating"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="Type the rating">
                             </div>
                         </div>
                         <button type="submit"
@@ -362,7 +279,7 @@
                                     d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                                     clip-rule="evenodd"></path>
                             </svg>
-                            Add new room
+                            Add new room type
                         </button>
                     </form>
                 </div>

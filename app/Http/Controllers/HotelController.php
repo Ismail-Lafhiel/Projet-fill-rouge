@@ -33,15 +33,18 @@ class HotelController extends Controller
     {
         $data = $request->validated();
         $hotel = $this->hotelRepository->create($data);
-        // Handle image upload
+
+        // Handle image upload if photos are sent
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {
                 $path = $photo->store('hotel_photos', 'public');
                 $hotel->photos()->create(['path' => $path]);
             }
         }
+
         return redirect()->route('hotels.index')->with('success', "{$hotel->name} created successfully");
     }
+
 
     /**
      * Display the specified resource.
@@ -66,14 +69,17 @@ class HotelController extends Controller
     public function update(HotelRequest $request, Hotel $hotel)
     {
         $data = $request->validated();
-        // Handle image upload
+
+        // Handle image upload if photos are sent
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {
                 $path = $photo->store('hotel_photos', 'public');
                 $hotel->photos()->create(['path' => $path]);
             }
         }
+
         $this->hotelRepository->update($hotel, $data);
+
         return redirect()->route('hotels.index')->with('success', "{$hotel->name} updated successfully");
     }
     /**

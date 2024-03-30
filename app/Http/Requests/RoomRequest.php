@@ -27,10 +27,16 @@ class RoomRequest extends FormRequest
             'description' => 'required|string',
             'availability' => 'required|string|in:available,not available',
             'number_of_beds' => 'required|integer|min:1',
-            'room_type' => 'required|string|max:255',
+            'room_type_id' => 'required|exists:room_types,id',
             'price' => 'required|numeric|min:0',
             'photos.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'rating' => 'required|numeric|between:0,5',
+        ];
+    }
+    public function messages(){
+        return [
+            'hotel_id.required' => "Hotel is required",
+            'room_type_id.required' => "Room type is required",
         ];
     }
 }
