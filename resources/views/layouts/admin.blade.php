@@ -24,6 +24,10 @@
                 class="flex-grow px-4 pb-4 md:block md:pb-0 md:overflow-y-auto">
                 <x-admin-link :active="request()->routeIs('admin.dashboard')" href="{{ route('admin.dashboard') }}">Dashboard
                 </x-admin-link>
+                {{-- <x-admin-link :active="request()->routeIs('admin.dashboard')" href="{{ route('admin.dashboard') }}">Locations
+                </x-admin-link> --}}
+                <x-admin-link :active="request()->routeIs('roomtype.index')" href="{{ route('roomtype.index') }}">Room Types
+                </x-admin-link>
                 <x-admin-link :active="request()->routeIs('hotels.index')" href="{{ route('hotels.index') }}">Hotels
                 </x-admin-link>
                 <x-admin-link :active="request()->routeIs('rooms.index')" href="{{ route('rooms.index') }}">Rooms

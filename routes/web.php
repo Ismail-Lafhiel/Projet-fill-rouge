@@ -5,6 +5,7 @@ use App\Http\Controllers\HotelController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MainContentController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\RoomTypeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -63,7 +64,10 @@ Route::middleware([
     Route::resource('hotels', HotelController::class);
     // rooms routes
     Route::resource('rooms', RoomController::class);
-
+     // roomtype routes
+    Route::resource('roomtype', RoomTypeController::class);
+     // location routes
+    Route::resource('locations', LocationController::class);
     // admin dashboard
     Route::get('/dashboard', function () {
         return view("admin.index");

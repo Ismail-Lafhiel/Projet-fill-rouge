@@ -118,7 +118,7 @@
                                             <path clip-rule="evenodd" fill-rule="evenodd"
                                                 d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                                         </svg>
-                                        Add Hotel
+                                        Add Room type
                                     </button>
 
                                     <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown"
@@ -157,23 +157,20 @@
                                     <tr>
                                         <th scope="col" class="px-4 py-3">id</th>
                                         <th scope="col" class="px-4 py-3">Name</th>
-                                        <th scope="col" class="px-4 py-3">location</th>
-                                        <th scope="col" class="px-4 py-3">number of rooms</th>
-                                        <th scope="col" class="px-4 py-3">rating</th>
                                         <th scope="col" class="px-4 py-3">
                                             <span class="sr-only">Actions</span>
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($hotels as $hotel)
+                                    @foreach ($room_types as $room_type)
                                         <tr class="border-b dark:border-gray-700">
-                                            <td class="px-4 py-3">{{$hotel->id}}</td>
+                                            <td class="px-4 py-3">{{$room_type->id}}</td>
                                             <th scope="row"
                                                 class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                {{$hotel->name}}</th>
+                                                {{$room_type->name}}</th>
                                             <td class="px-4 py-3 flex items-center justify-end">
-                                                <button id="{{$hotel->id}}-dropdown-button" data-dropdown-toggle="{{$hotel->id}}-dropdown"
+                                                <button id="{{$room_type->id}}-dropdown-button" data-dropdown-toggle="{{$room_type->id}}-dropdown"
                                                     class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
                                                     type="button">
                                                     <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
@@ -182,23 +179,23 @@
                                                             d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
                                                     </svg>
                                                 </button>
-                                                <div id="{{$hotel->id}}-dropdown"
+                                                <div id="{{$room_type->id}}-dropdown"
                                                     class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                                                     <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                                                        aria-labelledby="{{$hotel->id}}-dropdown-button">
+                                                        aria-labelledby="{{$room_type->id}}-dropdown-button">
                                                         <li>
-                                                            <a href="{{ route('hotels.show', $hotel->id) }}"
+                                                            <a href="{{ route('roomtype.show', $room_type->id) }}"
                                                                 class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show</a>
                                                         </li>
                                                         <li>
-                                                            <a href="{{ route('hotels.edit', $hotel->id) }}"
+                                                            <a href="{{ route('roomtype.edit', $room_type->id) }}"
                                                                 class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
                                                         </li>
                                                     </ul>
                                                     <a id="deleteButton" data-modal-target="deleteModal"
                                                         data-modal-toggle="deleteModal" data-record-id="1"
-                                                        data-record-id="{{ $hotel->id }}"
-                                                        data-action="{{ route('hotels.destroy', $hotel->id) }}"
+                                                        data-record-id="{{ $room_type->id }}"
+                                                        data-action="{{ route('roomtype.destroy', $room_type->id) }}"
                                                         class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                                         Delete
                                                     </a>
@@ -257,7 +254,7 @@
                             </div>
                         </div>
                     @endif
-                    <form id="createForm" action="" method="POST"
+                    <form id="createForm" action="{{route('roomtype.store')}}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="grid gap-6 mb-6 md:grid-cols-2">
@@ -267,7 +264,7 @@
                                     Name</label>
                                 <input type="text" name="name" id="name"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="Type hotel name">
+                                    placeholder="Type room type name">
 
                             </div>
                         </div>
