@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RoomRequest;
+use App\Models\Booking;
 use App\Models\Hotel;
 use App\Models\Room;
 use App\Models\RoomType;
 use App\Repositories\Interfaces\RoomRepositoryInterface;
+use App\Rules\StartDateNotBeforeToday;
 use Illuminate\Http\Request;
 
 class RoomController extends Controller
@@ -76,13 +78,33 @@ class RoomController extends Controller
     }
 
 
-    public function destroy(Room $room){
-        
+    public function destroy(Room $room)
+    {
+
         $hotel = $room->hotel;
         $this->roomRepository->delete($room);
         $hotel->number_of_rooms = $hotel->rooms()->count();
         $hotel->save();
         session()->flash('success', "{$room->reference} deleted successfully");
         return response()->json(['success' => true, 'message' => "{$room->reference} deleted successfully"]);
+    }
+
+    public function bookRoom(Request $request, Room $room)
+    {
+        $validatedData = $request->validate([
+            'start_date' => ['required', 'date', new StartDateNotBeforeToday],
+            'end_date' => 'required|date|after:start_date',
+        ], [
+            'start_date.before' => 'The start date must be today or later.',
+        ]);
+        $booking = new Booking();
+        $booking->user_id = auth()->user()->id;
+        $booking->room_id = $room->id;
+        $booking->start_date = $validatedData['start_date'];
+        $booking->end_date = $validatedData['end_date'];
+        $booking->status = 'pending';
+        $booking->save();
+
+        return redirect()->back()->with('success', 'Booking successful!');
     }
 }
