@@ -119,7 +119,7 @@
                         <div>
                             <label for="start"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-                            <input id="start" name="start" type="text" onfocus="(this.type='date')"
+                            <input id="start" name="start_date" type="text" onfocus="(this.type='date')"
                                 placeholder="Check in" onblur="(this.type='text')"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 required>
@@ -127,7 +127,7 @@
                         <div>
                             <label for="end"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-                            <input id="end" name="end" type="text" onfocus="(this.type='date')"
+                            <input id="end" name="end_date" type="text" onfocus="(this.type='date')"
                                 placeholder="Check out" onblur="(this.type='text')"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 required>

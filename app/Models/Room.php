@@ -9,7 +9,7 @@ class Room extends Model
 {
     use HasFactory;
 
-    protected $fillable=[
+    protected $fillable = [
         'reference',
         'availability',
         'number_of_beds',
@@ -29,7 +29,13 @@ class Room extends Model
         return $this->belongsTo(Hotel::class);
     }
 
-    public function roomType(){
+    public function roomType()
+    {
         return $this->belongsTo(RoomType::class);
+    }
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
     }
 }
