@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\BookingCreated;
 use App\Http\Requests\RoomRequest;
 use App\Models\Booking;
 use App\Models\Hotel;
@@ -89,9 +90,12 @@ class RoomController extends Controller
         session()->flash('success', "{$room->reference} deleted successfully");
         return response()->json(['success' => true, 'message' => "{$room->reference} deleted successfully"]);
     }
-
     public function bookRoom(Request $request, Room $room)
     {
+        if ($room->availability !== 'available') {
+            return redirect()->back()->with('error', 'The room is not available for booking.');
+        }
+
         $validatedData = $request->validate([
             'start_date' => ['required', 'date', new StartDateNotBeforeToday],
             'end_date' => 'required|date|after:start_date',
@@ -101,10 +105,9 @@ class RoomController extends Controller
 
         $startDate = Carbon::parse($validatedData['start_date']);
         $endDate = Carbon::parse($validatedData['end_date']);
+
         $numberOfDays = $endDate->diffInDays($startDate);
-
         $roomPrice = $room->price;
-
         $totalPrice = $numberOfDays * $roomPrice;
 
         $booking = new Booking();
@@ -114,9 +117,9 @@ class RoomController extends Controller
         $booking->end_date = $endDate;
         $booking->number_of_days = $numberOfDays;
         $booking->total_price = $totalPrice;
-        $booking->status = 'pending';
+        $booking->status = 'confirmed';
         $booking->save();
-
-        return redirect()->back()->with('success', 'Booking successful!');
+        
+        return redirect()->back()->with('success', 'Booking pending approval.');
     }
 }
