@@ -1,6 +1,6 @@
 <x-guest-layout>
     <x-header />
-    <section class="container mx-auto px-5 py-2 lg:px-32 lg:pt-24">
+    <section class="container mx-auto px-5 py-2 lg:px-32 lg:py-24">
         <h1 class="max-w-2xl mb-4 text-3xl font-bold tracking-tight leading-none md:text-4xl xl:text-5xl text-gray-900">
             All Hotels</h1>
         <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 text-sm md:text-md lg:text-lg">View all hotels

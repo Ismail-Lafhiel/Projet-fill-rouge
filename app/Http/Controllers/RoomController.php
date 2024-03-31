@@ -76,9 +76,12 @@ class RoomController extends Controller
     }
 
 
-    public function destroy(Room $room)
-    {
+    public function destroy(Room $room){
+        
+        $hotel = $room->hotel;
         $this->roomRepository->delete($room);
+        $hotel->number_of_rooms = $hotel->rooms()->count();
+        $hotel->save();
         session()->flash('success', "{$room->reference} deleted successfully");
         return response()->json(['success' => true, 'message' => "{$room->reference} deleted successfully"]);
     }
