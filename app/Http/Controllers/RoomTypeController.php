@@ -29,6 +29,11 @@ class RoomTypeController extends Controller
         $roomType = RoomType::findOrFail($id);
         return view("room_type.edit", compact('roomType'));
     }
+    public function show($id)
+    {
+        $roomType = RoomType::findOrFail($id);
+        return view("room_type.show", compact('roomType'));
+    }
 
     public function update(Request $request, $id)
     {

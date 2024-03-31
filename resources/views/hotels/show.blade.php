@@ -4,7 +4,7 @@
             <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
                 <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
                     <h2 class="text-4xl mb-8 font-semibold text-gray-900 dark:text-white">
-                        Show Hotel
+                        Hotel Info
                     </h2>
                     <form>
                         <form>
