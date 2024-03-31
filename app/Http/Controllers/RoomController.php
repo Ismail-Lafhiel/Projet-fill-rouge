@@ -9,6 +9,7 @@ use App\Models\Room;
 use App\Models\RoomType;
 use App\Repositories\Interfaces\RoomRepositoryInterface;
 use App\Rules\StartDateNotBeforeToday;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class RoomController extends Controller
@@ -97,11 +98,22 @@ class RoomController extends Controller
         ], [
             'start_date.before' => 'The start date must be today or later.',
         ]);
+
+        $startDate = Carbon::parse($validatedData['start_date']);
+        $endDate = Carbon::parse($validatedData['end_date']);
+        $numberOfDays = $endDate->diffInDays($startDate);
+
+        $roomPrice = $room->price;
+
+        $totalPrice = $numberOfDays * $roomPrice;
+
         $booking = new Booking();
         $booking->user_id = auth()->user()->id;
         $booking->room_id = $room->id;
-        $booking->start_date = $validatedData['start_date'];
-        $booking->end_date = $validatedData['end_date'];
+        $booking->start_date = $startDate;
+        $booking->end_date = $endDate;
+        $booking->number_of_days = $numberOfDays;
+        $booking->total_price = $totalPrice;
         $booking->status = 'pending';
         $booking->save();
 
