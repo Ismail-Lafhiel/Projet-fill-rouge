@@ -17,13 +17,26 @@ class LocationController extends Controller
         $validatedData = $request->validate([
             'city' => 'required|max:255',
             'country' => 'required|max:255',
+            'photos.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
-        $location = Location::create($validatedData);
+        $location = Location::create([
+            'city' => $validatedData['city'],
+            'country' => $validatedData['country']
+        ]);
+
+        // Store photos if they exist in the request
+        if ($request->hasFile('photos')) {
+            foreach ($request->file('photos') as $photo) {
+                $path = $photo->store('location_photos', 'public');
+                $location->photos()->create(['path' => $path]);
+            }
+        }
 
         return redirect()->route('locations.index')
             ->with('success', "{$location->city} created successfully.");
     }
+
 
     public function edit(Location $location)
     {
@@ -38,9 +51,22 @@ class LocationController extends Controller
         $validatedData = $request->validate([
             'city' => 'required|max:255',
             'country' => 'required|max:255',
+            'photos.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
-        $location->update($validatedData);
+        $location->update([
+            'city' => $validatedData['city'],
+            'country' => $validatedData['country']
+        ]);
+
+        $location->photos()->delete();
+
+        if ($request->hasFile('photos')) {
+            foreach ($request->file('photos') as $photo) {
+                $path = $photo->store('location_photos', 'public');
+                $location->photos()->create(['path' => $path]);
+            }
+        }
 
         return redirect()->route('locations.index')
             ->with('success', "{$location->city} updated successfully.");

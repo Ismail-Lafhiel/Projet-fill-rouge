@@ -24,25 +24,22 @@ use Illuminate\Support\Facades\Route;
 // })->name('welcome');
 
 // auth routes
-Route::get('/login', [AuthController::class, 'showLogin'])->name("login");
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+    Route::post('/login-to-account', [AuthController::class, 'login'])->name('account.login');
+    Route::post('/create-account', [AuthController::class, 'register'])->name('account.register');
+    Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name('forgotPassword');
+    Route::post('/send-reset-link-email', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::get('/reset-password', function () {
+        return view('auth.reset_password');
+    })->name('password.reset');
+});
 
-Route::get('/register', [AuthController::class, 'showRegister'])->name("register");
-
-Route::post('/login-to-account', [AuthController::class, 'login'])->name('account.login');
-
-Route::post('/create-account', [AuthController::class, 'register'])->name('account.register');
-
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name("forgotPassword");
-
-Route::post('/send-reset-link-email', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
-
-Route::get('/reset-password', function () {
-    return view('auth.reset_password');
-})->name('password.reset');
-
-Route::post('/change-password', [AuthController::class, 'changePassword'])->name('password.change');
+Route::middleware('auth')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('/change-password', [AuthController::class, 'changePassword'])->name('password.change');
+});
 
 
 Route::get("/", [MainContentController::class, 'index'])->name("home");

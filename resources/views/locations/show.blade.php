@@ -26,8 +26,25 @@
                                     value="{{ $location->country }}">
 
                             </div>
+                            <div class="grid gap-4 sm:col-span-2">
+                                <h3 class="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Location Photos</h3>
+                                <div>
+                                    <img id="featuredImage" class="h-auto max-w-full rounded-lg"
+                                        src="{{ asset('storage/' . $location->photos->first()->path) }}"
+                                        alt="Featured Room Photo">
+                                </div>
+                                <div class="grid grid-cols-5 gap-4">
+                                    @foreach ($location->photos as $photo)
+                                        <div>
+                                            <img class="thumbnail h-auto max-w-full rounded-lg"
+                                                src="{{ asset('storage/' . $photo->path) }}" alt="Room Photo">
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
                         </div>
-                        <a href="{{route('locations.index')}}" class="text-white inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                        <a href="{{ route('locations.index') }}"
+                            class="text-white inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                             Go back
                         </a>
                     </form>

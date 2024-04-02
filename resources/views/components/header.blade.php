@@ -12,7 +12,7 @@
                             src="{{ asset('storage/avatar.webp') }}" alt="User dropdown">
                         <!-- Dropdown menu -->
                         <div id="userDropdown"
-                            class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+                            class="z-20 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
                             <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
                                 <div>{{ Auth::user()->name }}</div>
                                 <div class="font-medium truncate">{{ Auth::user()->email }}</div>
@@ -20,7 +20,7 @@
                             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
                                 @if (Auth::user()->role === 'admin')
                                     <li>
-                                        <a href="{{route("admin.dashboard")}}"
+                                        <a href="{{ route('admin.dashboard') }}"
                                             class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
                                     </li>
                                 @else

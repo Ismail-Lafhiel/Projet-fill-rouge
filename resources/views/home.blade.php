@@ -42,7 +42,7 @@
                     transition duration-300 transform hover:scale-105 cursor-pointer"
                     onclick="window.location.href = '{{ route('hotels.location', $location->city) }}'">
                     @foreach ($location->photos as $photo)
-                        <img src="{{ $photo->path }}" alt=""
+                        <img src="{{ asset('storage/' . $photo->path) }}" alt=""
                             class="absolute inset-0 h-full w-full object-cover">
                     @endforeach
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40"></div>
