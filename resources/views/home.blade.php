@@ -1,48 +1,36 @@
 <x-guest-layout>
     <x-header />
-    <section class="bg-white relative dark:bg-gray-900"
-        style="background: url('https://wallpapers.com/images/hd/3d-travel-1920-x-1080-wallpaper-veg2m8i6mbzx7cgf.jpg'); background-size: cover; background-repeat: no-repeat">
-        <div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+    <section class="bg-white relative dark:bg-gray-900" id="background-slider" style="background: url('http://127.0.0.1:8000/storage/slider_imgs/greece.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center; padding-top: 120px; padding-bottom: 120px; position: relative;">
+        <div class="bg-black opacity-50 absolute inset-0 z-0"></div> <!-- Overlay element -->
+        <div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12 relative z-10">
             <div class="mr-auto place-self-center lg:col-span-7">
-                <h1
-                    class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl text-white">
-                    Where Luxury Meets Comfort</h1>
-                <p class="max-w-2xl mb-6 font-medium text-gray-200 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
-                    EliteStay, Your Ultimate Retreat!</p>
-                <a href="#"
-                    class="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
-                    Sign in / Register
-                </a>
+                <h1 class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl text-white">Where Luxury Meets Comfort</h1>
+                <p class="max-w-2xl mb-6 font-medium text-gray-200 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">EliteStay, Your Ultimate Retreat!</p>
+                <a href="{{route('login')}}" class="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">Sign in / Register</a>
             </div>
         </div>
-        <form class="mx-auto absolute top-[92%] left-[50%] translate-x-[-50%] flex">
+        <form class="mx-auto absolute top-[95%] left-[50%] translate-x-[-50%] flex">
             <div class="border-4 border-blue-500 rounded-s-lg w-full">
                 <div class="relative">
-                    <input type="search" id="default-search"
-                        class="block w-full p-4 text-sm text-gray-900 focus:ring-0 border-none bg-gray-50"
-                        placeholder="Where are you going?" required />
+                    <input type="search" id="default-search" class="block w-full p-4 text-sm text-gray-900 focus:ring-0 border-none bg-gray-50" placeholder="Where are you going?" required />
                 </div>
             </div>
             <div class="border-4 border-l-0 border-blue-500 hidden md:block w-full">
                 <div class="relative">
-                    <input id="start" name="start" type="text" onfocus="(this.type='date')"
-                        placeholder="Check in" onblur="(this.type='text')"
-                        class="block text-center w-full p-4 text-md text-gray-900 focus:ring-0 border-none bg-gray-50" />
+                    <input id="start" name="start" type="text" onfocus="(this.type='date')" placeholder="Check in" onblur="(this.type='text')" class="block text-center w-full p-4 text-md text-gray-900 focus:ring-0 border-none bg-gray-50" />
                 </div>
             </div>
             <div class="border-4 border-l-0 border-blue-500 hidden md:block w-full">
                 <div class="relative">
-                    <input id="end" name="end" type="text" onfocus="(this.type='date')"
-                        placeholder="Check out" onblur="(this.type='text')"
-                        class="block text-center w-full p-4 text-md text-gray-900 border-none bg-gray-50 focus:ring-0" />
+                    <input id="end" name="end" type="text" onfocus="(this.type='date')" placeholder="Check out" onblur="(this.type='text')" class="block text-center w-full p-4 text-md text-gray-900 border-none bg-gray-50 focus:ring-0" />
                 </div>
             </div>
             <div class="border-4 border-l-0 border-blue-500 rounded-e-xl">
-                <button type="button"
-                    class="block w-full p-4 px-10 text-md rounded-e-lg bg-primary-600 text-white">Search</button>
+                <button type="button" class="block w-full p-4 px-10 text-md rounded-e-lg bg-primary-600 text-white">Search</button>
             </div>
         </form>
     </section>
+    
     <section class="container mx-auto px-5 py-2 lg:px-32 lg:pt-24">
         <h2 class="max-w-2xl mb-4 text-xl font-bold tracking-tight leading-none md:text-2xl xl:text-3xl text-gray-900">
             Trending destinations</h2>

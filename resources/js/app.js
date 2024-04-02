@@ -1,6 +1,29 @@
 import './bootstrap';
 import 'flowbite';
-import Datepicker from 'flowbite-datepicker/Datepicker';
+
+
+//hero slider
+document.addEventListener("DOMContentLoaded", function () {
+    const backgrounds = [
+        'url("http://127.0.0.1:8000/storage/slider_imgs/morocco.jpg")',
+        'url("http://127.0.0.1:8000/storage/slider_imgs/nyc.jpg")',
+        'url("http://127.0.0.1:8000/storage/slider_imgs/pyramid.jpg")',
+        'url("http://127.0.0.1:8000/storage/slider_imgs/maldives.jpg")',
+        // Add more background image URLs here
+    ];
+
+    let currentBackgroundIndex = 0;
+    const backgroundSlider = document.getElementById('background-slider');
+
+    function changeBackground() {
+        backgroundSlider.style.transition = "background-image 1s ease-in";
+        backgroundSlider.style.backgroundImage = backgrounds[currentBackgroundIndex];
+        currentBackgroundIndex = (currentBackgroundIndex + 1) % backgrounds.length;
+    }
+
+    setInterval(changeBackground, 5000);
+});
+
 
 // delete functionality
 document.addEventListener('DOMContentLoaded', function () {
@@ -73,13 +96,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 // description and rooms toggle switch
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const descriptionTab = document.getElementById("descriptionTab");
     const roomsTab = document.getElementById("roomsTab");
     const descriptionSection = document.getElementById("descriptionSection");
     const roomsSection = document.getElementById("roomsSection");
 
-    roomsTab.addEventListener("click", function() {
+    roomsTab.addEventListener("click", function () {
         // Hide description section and show rooms section
         descriptionSection.classList.add("hidden");
         roomsSection.classList.remove("hidden");
@@ -92,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function() {
         descriptionTab.classList.remove("text-gray-400");
     });
 
-    descriptionTab.addEventListener("click", function() {
+    descriptionTab.addEventListener("click", function () {
         // Hide rooms section and show description section
         roomsSection.classList.add("hidden");
         descriptionSection.classList.remove("hidden");
