@@ -74,3 +74,6 @@ Route::middleware([
 
 Route::get('/{location}/hotels', [MainContentController::class, 'showHotelsInDestination'])->name('hotels.location');
 Route::post('/book/{room}', [RoomController::class, 'bookRoom'])->name("bookRoom");
+
+
+Route::get('/profile', [MainContentController::class, 'getUserInformation'])->name("user.profile");

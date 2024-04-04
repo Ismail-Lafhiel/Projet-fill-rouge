@@ -6,6 +6,7 @@ use App\Models\Hotel;
 use App\Models\Location;
 use App\Models\Room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MainContentController extends Controller
 {
@@ -43,5 +44,19 @@ class MainContentController extends Controller
     }
     public function room(Room $room){
         return view("room", compact("room"));
+    }
+    public function getUserInformation()
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+
+            $userId = $user->id;
+            $userName = $user->name;
+            $userEmail = $user->email;
+
+            return view('profile', compact('user'));
+        } else {
+            return redirect()->route('login');
+        }
     }
 }
