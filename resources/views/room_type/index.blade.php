@@ -205,6 +205,9 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            <div class="px-2 py-1">
+                                {!! $room_types->links() !!}
+                            </div>
                         </div>
                     </div>
                 </div>

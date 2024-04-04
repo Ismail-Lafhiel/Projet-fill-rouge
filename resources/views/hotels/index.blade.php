@@ -168,15 +168,17 @@
                                 <tbody>
                                     @foreach ($hotels as $hotel)
                                         <tr class="border-b dark:border-gray-700">
-                                            <td class="px-4 py-3">{{$hotel->id}}</td>
+                                            <td class="px-4 py-3">{{ $hotel->id }}</td>
                                             <th scope="row"
                                                 class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                {{$hotel->name}}</th>
-                                            <td class="px-4 py-3">{{$hotel->location->city}}, {{$hotel->location->country}}</td>
-                                            <td class="px-4 py-3">{{$hotel->number_of_rooms}}</td>
-                                            <td class="px-4 py-3">{{$hotel->rating}}/5 stars</td>
+                                                {{ $hotel->name }}</th>
+                                            <td class="px-4 py-3">{{ $hotel->location->city }},
+                                                {{ $hotel->location->country }}</td>
+                                            <td class="px-4 py-3">{{ $hotel->number_of_rooms }}</td>
+                                            <td class="px-4 py-3">{{ $hotel->rating }}/5 stars</td>
                                             <td class="px-4 py-3 flex items-center justify-end">
-                                                <button id="{{$hotel->id}}-dropdown-button" data-dropdown-toggle="{{$hotel->id}}-dropdown"
+                                                <button id="{{ $hotel->id }}-dropdown-button"
+                                                    data-dropdown-toggle="{{ $hotel->id }}-dropdown"
                                                     class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
                                                     type="button">
                                                     <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
@@ -185,10 +187,10 @@
                                                             d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
                                                     </svg>
                                                 </button>
-                                                <div id="{{$hotel->id}}-dropdown"
+                                                <div id="{{ $hotel->id }}-dropdown"
                                                     class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                                                     <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                                                        aria-labelledby="{{$hotel->id}}-dropdown-button">
+                                                        aria-labelledby="{{ $hotel->id }}-dropdown-button">
                                                         <li>
                                                             <a href="{{ route('hotels.show', $hotel->id) }}"
                                                                 class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show</a>
@@ -211,6 +213,9 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            <div class="px-2 py-1">
+                                {!! $hotels->links() !!}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -294,10 +299,11 @@
                                 <label for="location_id"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hotel
                                     Location</label>
-                                <select name="location_id" id="location_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                <select name="location_id" id="location_id"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                     <option value="#">Select hotel location</option>
                                     @foreach ($locations as $location)
-                                        <option value="{{$location->id}}">{{$location->city}}</option>
+                                        <option value="{{ $location->id }}">{{ $location->city }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -367,4 +373,5 @@
                 </div>
             </div>
         </div>
+    </div>
 </x-admin-layout>

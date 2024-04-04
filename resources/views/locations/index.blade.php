@@ -208,6 +208,9 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            <div class="px-2 py-1">
+                                {!! $locations->links() !!}
+                            </div>
                         </div>
                     </div>
                 </div>

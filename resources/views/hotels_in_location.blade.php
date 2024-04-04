@@ -53,6 +53,9 @@
             </div>
         @endforeach
     </div>
+    <div class="px-2 py-10">
+        {!! $hotels->links() !!}
+    </div>
 </section>
 <x-footer />
 </x-guest-layout>
