@@ -23,18 +23,4 @@ class Booking extends Model
     {
         return $this->belongsTo(Room::class);
     }
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        // Log to check if the boot method is called
-        Log::debug('Booking model boot method called.');
-
-        static::saved(function ($booking) {
-            if ($booking->status === 'confirmed') {
-                $booking->room->updateAvailability();
-            }
-        });
-    }
 }

@@ -12,6 +12,7 @@ use App\Repositories\Interfaces\RoomRepositoryInterface;
 use App\Rules\StartDateNotBeforeToday;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 
 class RoomController extends Controller
 {
@@ -90,6 +91,7 @@ class RoomController extends Controller
         session()->flash('success', "{$room->reference} deleted successfully");
         return response()->json(['success' => true, 'message' => "{$room->reference} deleted successfully"]);
     }
+
     public function bookRoom(Request $request, Room $room)
     {
         if ($room->availability !== 'available') {
@@ -119,6 +121,8 @@ class RoomController extends Controller
         $booking->total_price = $totalPrice;
         $booking->status = 'confirmed';
         $booking->save();
+
+        Artisan::call('rooms:update-availability');
         
         return redirect()->back()->with('success', 'Booking pending approval.');
     }
