@@ -39,8 +39,8 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::post('/change-password', [AuthController::class, 'changePassword'])->name('password.change');
+    Route::get('/profile', [MainContentController::class, 'getUserInformation'])->name("user.profile");
 });
-
 
 Route::get("/", [MainContentController::class, 'index'])->name("home");
 Route::get("/destinations", [MainContentController::class, 'destinations'])->name("destinations");
@@ -48,8 +48,6 @@ Route::get("/hotels-all", [MainContentController::class, 'hotels'])->name("hotel
 Route::get("/hotel/{hotel}", [MainContentController::class, 'hotel'])->name("hotel.view");
 Route::get("/rooms-all", [MainContentController::class, 'rooms'])->name("rooms.view");
 Route::get("/room/{room}", [MainContentController::class, 'room'])->name("room.view");
-
-
 
 Route::middleware([
     'auth',
@@ -71,9 +69,9 @@ Route::middleware([
     })->name("admin.dashboard");
 });
 
-
 Route::get('/{location}/hotels', [MainContentController::class, 'showHotelsInDestination'])->name('hotels.location');
 Route::post('/book/{room}', [RoomController::class, 'bookRoom'])->name("bookRoom");
+Route::get('{user}/bookings', [MainContentController::class, 'user_bookings'])->name('user.bookings');
+Route::delete('cancel-booking/{booking}', [MainContentController::class, 'cancelBooking'])->name('cancel.booking');
 
 
-Route::get('/profile', [MainContentController::class, 'getUserInformation'])->name("user.profile");

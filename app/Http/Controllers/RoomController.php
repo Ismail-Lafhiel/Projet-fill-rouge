@@ -125,5 +125,7 @@ class RoomController extends Controller
         Artisan::call('rooms:update-availability');
         
         return redirect()->back()->with('success', 'Booking pending approval.');
+        // update availability command
+        // php artisan rooms:update-availability
     }
 }

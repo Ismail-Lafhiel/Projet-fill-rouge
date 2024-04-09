@@ -15,9 +15,9 @@ class UpdateRoomAvailabilityCommand extends Command
     {
         $now = Carbon::now();
 
-        // Find bookings where end_date is in the past
+        // Find bookings where end_date is in the past and status is confirmed, pending, or canceled
         $pastBookings = Booking::where('end_date', '<', $now)
-            ->where('status', 'confirmed')
+            ->whereIn('status', ['confirmed', 'pending', 'canceled'])
             ->get();
 
         foreach ($pastBookings as $booking) {
@@ -25,7 +25,7 @@ class UpdateRoomAvailabilityCommand extends Command
             $room->update(['availability' => 'available']);
         }
 
-        // Find bookings where end_date is in the future
+        // Find bookings where end_date is in the future and status is confirmed
         $futureBookings = Booking::where('end_date', '>', $now)
             ->where('status', 'confirmed')
             ->get();
