@@ -28,4 +28,8 @@ class Hotel extends Model
     {
         return $this->hasMany(Room::class);
     }
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class);
+    }
 }

@@ -39,7 +39,10 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::post('/change-password', [AuthController::class, 'changePassword'])->name('password.change');
+    // profile
     Route::get('/profile', [MainContentController::class, 'getUserInformation'])->name("user.profile");
+    // bookmarks
+    Route::post('/hotels/{hotel}/bookmark', [HotelController::class, 'bookmark'])->name('hotels.bookmark');
 });
 
 Route::get("/", [MainContentController::class, 'index'])->name("home");

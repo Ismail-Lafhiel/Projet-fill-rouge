@@ -91,4 +91,23 @@ class HotelController extends Controller
         session()->flash('success', "{$hotel->name} deleted successfully");
         return response()->json(['success' => true, 'message' => "{$hotel->name} deleted successfully"]);
     }
+
+    // bookmark
+    public function bookmark(Hotel $hotel)
+    {
+        $user = auth()->user();
+
+        // Check if the user already bookmarked the hotel
+        if (!$user->bookmarks()->where('hotel_id', $hotel->id)->exists()) {
+            // Create a new bookmark
+            $bookmark = new Bookmark();
+            $bookmark->user_id = $user->id;
+            $bookmark->hotel_id = $hotel->id;
+            $bookmark->save();
+
+            return response()->json(['message' => 'Hotel bookmarked successfully']);
+        }
+
+        return response()->json(['message' => 'Hotel already bookmarked'], 400);
+    }
 }
