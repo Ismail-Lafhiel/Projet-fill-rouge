@@ -36,20 +36,28 @@
                             @endforeach
                         </div>
                     </div>
+                    @php
+                        $totalPrice = 0;
+                        foreach ($bookingData as $booking) {
+                            $totalPrice += $booking['total_price'];
+                        }
+                    @endphp
+
                     <div class="absolute left-0 bottom-0 bg-[#444] w-full p-4">
-                        <h4 class="flex flex-wrap gap-4 text-base text-white">Total <span class="ml-auto">$84.00</span>
-                        </h4>
+                        <h4 class="flex flex-wrap gap-4 text-base text-white">Total <span
+                                class="ml-auto">${{ number_format($totalPrice, 2) }}</span></h4>
                     </div>
                 </div>
             </div>
             <div class="xl:col-span-2 h-max rounded-md p-8 sticky top-0">
                 <h2 class="text-2xl font-bold text-[#333]">Complete your booking</h2>
-                <form class="mt-10">
+                <form method="POST" action="{{ route('checkout.process') }}" class="mt-10">
+                    @csrf
                     <div>
                         <h3 class="text-lg font-bold text-[#333] mb-6">Personal Details</h3>
                         <div class="grid sm:grid-cols-2 gap-6">
                             <div class="relative flex items-center">
-                                <input type="text" placeholder="First Name"
+                                <input type="text" name="first_name" placeholder="First Name"
                                     class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-primary-400 outline-none" />
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="#bbb" stroke="#bbb"
                                     class="w-[18px] h-[18px] absolute right-4" viewBox="0 0 24 24">
@@ -60,7 +68,7 @@
                                 </svg>
                             </div>
                             <div class="relative flex items-center">
-                                <input type="text" placeholder="Last Name"
+                                <input type="text" name="last_name" placeholder="Last Name"
                                     class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-primary-400 outline-none" />
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="#bbb" stroke="#bbb"
                                     class="w-[18px] h-[18px] absolute right-4" viewBox="0 0 24 24">
@@ -71,7 +79,7 @@
                                 </svg>
                             </div>
                             <div class="relative flex items-center">
-                                <input type="email" placeholder="Email"
+                                <input type="email" name="email" placeholder="Email"
                                     class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-primary-400 outline-none" />
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="#bbb" stroke="#bbb"
                                     class="w-[18px] h-[18px] absolute right-4" viewBox="0 0 682.667 682.667">
@@ -91,7 +99,7 @@
                                 </svg>
                             </div>
                             <div class="relative flex items-center">
-                                <input type="number" placeholder="Phone No."
+                                <input type="number" name="phone_number" placeholder="Phone No."
                                     class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-primary-400 outline-none" />
                                 <svg fill="#bbb" class="w-[18px] h-[18px] absolute right-4" viewBox="0 0 64 64">
                                     <path
@@ -105,7 +113,7 @@
                         <div class="flex gap-6 max-sm:flex-col mt-10">
                             <button type="button"
                                 class="rounded-md px-6 py-3 w-full text-sm font-semibold bg-transparent hover:bg-gray-100 border-2 text-[#333]">Cancel</button>
-                            <button type="button"
+                            <button type="submit"
                                 class="rounded-md px-6 py-3 w-full text-sm font-semibold bg-primary-600 text-white hover:bg-primary-700">Complete
                                 Booking</button>
                         </div>

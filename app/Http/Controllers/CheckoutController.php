@@ -43,14 +43,19 @@ class CheckoutController extends Controller
         // Retrieve the booking data from the session
         $bookingData = $request->session()->get('booking_data');
 
-        // Create a new booking instance
-        $booking = new Booking();
-        $booking->fill($bookingData);
-        $booking->user_id = Auth::id();
-        $booking->checkout_id = $checkout->id;
-        $booking->status = 'pending';
-        $booking->save();
-
+        // Loop through each booking data and create a new booking instance
+        foreach ($bookingData as $data) {
+            $booking = new Booking();
+            $booking->start_date = $data['start_date'];
+            $booking->end_date = $data['end_date'];
+            $booking->number_of_days = $data['number_of_days'];
+            $booking->total_price = $data['total_price'];
+            $booking->room_id = $data['room_id'];
+            $booking->user_id = Auth::id();
+            $booking->checkout_id = $checkout->id;
+            $booking->status = 'pending';
+            $booking->save();
+        }
         // Clear the booking data from the session
         $request->session()->forget('booking_data');
 
