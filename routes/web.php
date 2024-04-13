@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MainContentController;
@@ -42,7 +43,15 @@ Route::middleware('auth')->group(function () {
     // profile
     Route::get('/profile', [MainContentController::class, 'getUserInformation'])->name("user.profile");
     // bookmarks
+    // hotel bookmarks
     Route::post('/hotels/{hotel}/bookmark', [HotelController::class, 'bookmark'])->name('hotels.bookmark');
+    Route::get('/hotels/bookmarks', [HotelController::class, 'bookmarks'])->name('hotels.bookmarks');
+    // booking
+    Route::post('/book/{room}', [RoomController::class, 'bookRoom'])->name("bookRoom");
+    Route::get('{user}/bookings', [MainContentController::class, 'user_bookings'])->name('user.bookings');
+    // checkout
+    Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
+    Route::post('/checkout/process', [CheckoutController::class, 'processCheckout'])->name('checkout.process');
 });
 
 Route::get("/", [MainContentController::class, 'index'])->name("home");
@@ -62,9 +71,9 @@ Route::middleware([
     Route::resource('hotels', HotelController::class);
     // rooms routes
     Route::resource('rooms', RoomController::class);
-     // roomtype routes
+    // roomtype routes
     Route::resource('roomtype', RoomTypeController::class);
-     // location routes
+    // location routes
     Route::resource('locations', LocationController::class);
     // admin dashboard
     Route::get('/dashboard', function () {
@@ -73,8 +82,4 @@ Route::middleware([
 });
 
 Route::get('/{location}/hotels', [MainContentController::class, 'showHotelsInDestination'])->name('hotels.location');
-Route::post('/book/{room}', [RoomController::class, 'bookRoom'])->name("bookRoom");
-Route::get('{user}/bookings', [MainContentController::class, 'user_bookings'])->name('user.bookings');
 Route::delete('cancel-booking/{booking}', [MainContentController::class, 'cancelBooking'])->name('cancel.booking');
-
-

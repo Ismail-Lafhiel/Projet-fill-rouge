@@ -7,9 +7,8 @@
             from all around the world</p>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach ($hotels as $hotel)
-                <div class="cursor-pointer rounded-xl bg-white p-3 shadow-lg hover:shadow-xl"
-                    onclick="window.location.href = '{{ route('hotel.view', $hotel->id) }}'">
-                    <div class="relative flex items-end overflow-hidden rounded-xl">
+                <div class="cursor-pointer rounded-xl bg-white p-3 shadow-lg hover:shadow-xl">
+                    <div class="relative flex items-end overflow-hidden rounded-xl" onclick="window.location.href = '{{ route('hotel.view', $hotel->id) }}'">
                         @if ($hotel->photos->isNotEmpty())
                             @foreach ($hotel->photos as $photo)
                                 <img class="h-[250px] w-full" src="{{ asset('storage/' . $photo->path) }}"
@@ -44,11 +43,14 @@
                         </p>
 
                         <div class="group inline-flex rounded-xl bg-primary-100 p-2 hover:bg-primary-200">
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                class="h-4 w-4 text-primary-400 group-hover:text-primary-500" viewBox="0 0 20 20"
-                                fill="currentColor">
-                                <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" />
-                            </svg>
+                            <button type="button" class="bookmark-btn focus:outline-none"
+                                data-hotel-id="{{ $hotel->id }}">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="h-4 w-4 text-primary-400 group-hover:text-primary-500"
+                                    viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" />
+                                </svg>
+                            </button>
                         </div>
                     </div>
                 </div>

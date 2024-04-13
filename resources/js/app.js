@@ -128,3 +128,28 @@ document.addEventListener("DOMContentLoaded", function () {
         roomsTab.classList.remove("text-gray-400");
     });
 });
+
+// hotel bookmark
+document.querySelectorAll('.bookmark-btn').forEach(button => {
+    button.addEventListener('click', function () {
+        const hotelId = this.dataset.hotelId;
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        fetch(`/hotels/${hotelId}/bookmark`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': csrfToken,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        }).then(response => {
+            if (response.ok) {
+                // console.log('Hotel bookmarked successfully');
+            } else {
+                // console.error('Failed to bookmark hotel');
+            }
+        }).catch(error => {
+            console.error('Error occurred while bookmarking hotel:', error);
+        });
+    });
+});

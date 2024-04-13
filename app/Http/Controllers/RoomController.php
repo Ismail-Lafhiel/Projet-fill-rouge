@@ -112,20 +112,29 @@ class RoomController extends Controller
         $roomPrice = $room->price;
         $totalPrice = $numberOfDays * $roomPrice;
 
-        $booking = new Booking();
-        $booking->user_id = auth()->user()->id;
-        $booking->room_id = $room->id;
-        $booking->start_date = $startDate;
-        $booking->end_date = $endDate;
-        $booking->number_of_days = $numberOfDays;
-        $booking->total_price = $totalPrice;
-        $booking->status = 'confirmed';
-        $booking->save();
+        // Fetch the Room model object
+        $room = Room::findOrFail($room->id);
 
-        Artisan::call('rooms:update-availability');
-        
-        return redirect()->back()->with('success', 'Booking pending approval.');
-        // update availability command
-        // php artisan rooms:update-availability
+        $bookingData = [
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+            'number_of_days' => $numberOfDays,
+            'total_price' => $totalPrice,
+            'room_id' => $room->id,
+            'room' => $room, // Include the 'room' key with the Room model object
+        ];
+
+        // Retrieve existing booking data from the session
+        $existingBookingData = $request->session()->get('booking_data', []);
+
+        // Add the new booking data to the existing array
+        $existingBookingData[] = $bookingData;
+
+        // Store the updated booking data in the session
+        $request->session()->put('booking_data', $existingBookingData);
+
+        return redirect()->route('checkout');
     }
+    // update availability command
+    // php artisan rooms:update-availability
 }

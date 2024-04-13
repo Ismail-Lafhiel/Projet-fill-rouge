@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\HotelRequest;
+use App\Models\Bookmark;
 use App\Models\Hotel;
 use App\Models\Location;
+use App\Models\User;
 use App\Repositories\Interfaces\HotelRepositoryInterface;
 
 class HotelController extends Controller
@@ -97,17 +99,24 @@ class HotelController extends Controller
     {
         $user = auth()->user();
 
-        // Check if the user already bookmarked the hotel
         if (!$user->bookmarks()->where('hotel_id', $hotel->id)->exists()) {
-            // Create a new bookmark
             $bookmark = new Bookmark();
             $bookmark->user_id = $user->id;
             $bookmark->hotel_id = $hotel->id;
             $bookmark->save();
-
-            return response()->json(['message' => 'Hotel bookmarked successfully']);
+            session()->flash('success', "Hotel bookmarked successfully");
+            return response()->json(['success' => 'Hotel bookmarked successfully']);
         }
+        session()->flash('success', "Hotel already bookmarked");
+        return response()->json(['error' => 'Hotel already bookmarked'], 400);
+    }
+    public function bookmarks(User $user)
+    {
+        $bookmarks = $user->bookmarks;
 
-        return response()->json(['message' => 'Hotel already bookmarked'], 400);
+        $bookmarkedHotels = $bookmarks->map(function ($bookmark) {
+            return $bookmark->hotel;
+        });
+        return view('hotels_bookmarks', compact('bookmarkedHotels', 'user'));
     }
 }

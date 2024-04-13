@@ -1,0 +1,59 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Booking;
+use App\Models\Checkout;
+use App\Models\Room;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class CheckoutController extends Controller
+{
+    public function checkout(Request $request)
+    {
+        // Retrieve the booking data from the session
+        $bookingData = $request->session()->get('booking_data');
+
+        // Check if the booking data exists
+        if (!$bookingData) {
+            return redirect()->route('home')->with('error', 'No booking data found.');
+        }
+        dump($bookingData);
+        // Pass the booking data to the checkout view
+        return view('checkout', compact('bookingData'));
+    }
+
+
+    public function processCheckout(Request $request)
+    {
+        // Validate checkout data
+        $validatedData = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone_number' => 'required|string|max:20',
+        ]);
+
+        // Create a new checkout instance
+        $checkout = new Checkout();
+        $checkout->fill($validatedData);
+        $checkout->save();
+
+        // Retrieve the booking data from the session
+        $bookingData = $request->session()->get('booking_data');
+
+        // Create a new booking instance
+        $booking = new Booking();
+        $booking->fill($bookingData);
+        $booking->user_id = Auth::id();
+        $booking->checkout_id = $checkout->id;
+        $booking->status = 'pending';
+        $booking->save();
+
+        // Clear the booking data from the session
+        $request->session()->forget('booking_data');
+
+        return redirect()->route('home')->with('success', 'Booking completed successfully.');
+    }
+}
