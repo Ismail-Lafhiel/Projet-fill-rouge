@@ -44,39 +44,48 @@ class StripeController extends Controller
         return redirect()->away($session->url);
     }
 
-
     private function getLineItems($checkout)
     {
         $lineItems = [];
 
-        // Get all bookings associated with the checkout
-        foreach ($checkout->bookings as $booking) {
-            // Add each booking as a line item
-            $lineItems[] = [
-                'price_data' => [
-                    'currency' => 'USD',
-                    'unit_amount' => $booking->total_price * 100, // Stripe requires amount in cents
-                    'product_data' => [
-                        'name' => 'Room Reservation',
+        // Check if there are any bookings associated with the checkout
+        if ($checkout->bookings->isNotEmpty()) {
+            // Get all bookings associated with the checkout
+            foreach ($checkout->bookings as $booking) {
+                // Add each booking as a line item
+                $lineItems[] = [
+                    'price_data' => [
+                        'currency' => 'USD',
+                        'unit_amount' => $booking->total_price * 100, // Stripe requires amount in cents
+                        'product_data' => [
+                            'name' => 'Room Reservation',
+                        ],
                     ],
-                ],
-                'quantity' => 1,
-            ];
+                    'quantity' => 1,
+                ];
+            }
+        } else {
+            // If there are no bookings, return an empty array
+            return [];
         }
 
         return $lineItems;
     }
-
     public function success(Request $request)
     {
         // Retrieve checkout ID from the session
         $checkoutId = $request->session()->get('checkout_id');
         $checkout = Checkout::find($checkoutId);
 
-        // Update the status of each booking to 'confirmed'
-        foreach ($checkout->bookings as $booking) {
-            $booking->status = 'confirmed';
-            $booking->save();
+        // Check if checkout exists and has bookings
+        if ($checkout && $checkout->bookings->isNotEmpty()) {
+            // Update the status of each booking to 'confirmed'
+            foreach ($checkout->bookings as $booking) {
+                $booking->status = 'confirmed';
+                $booking->save();
+            }
+        } else {
+            return "No bookings found for this checkout.";
         }
 
         return "Thanks for your order. Your payment has been successfully processed.";

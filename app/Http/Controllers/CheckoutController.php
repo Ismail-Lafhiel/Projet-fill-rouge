@@ -42,6 +42,11 @@ class CheckoutController extends Controller
         // Retrieve the booking data from the session
         $bookingData = $request->session()->get('booking_data');
 
+        // Check if booking data exists
+        if (!$bookingData || empty($bookingData)) {
+            return redirect()->route('home')->with('error', 'No booking data found.');
+        }
+
         // Loop through each booking data and create a new booking instance
         foreach ($bookingData as $data) {
             $booking = new Booking();
@@ -59,6 +64,9 @@ class CheckoutController extends Controller
         // Clear the booking data from the session
         $request->session()->forget('booking_data');
 
-        return redirect()->route('session')->with('checkout_id', $checkout->id);
+        // Store checkout ID in session
+        $request->session()->put('checkout_id', $checkout->id);
+
+        return redirect()->route('session');
     }
 }
