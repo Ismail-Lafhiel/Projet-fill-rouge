@@ -19,11 +19,10 @@ class CheckoutController extends Controller
         if (!$bookingData) {
             return redirect()->route('home')->with('error', 'No booking data found.');
         }
-        dump($bookingData);
+
         // Pass the booking data to the checkout view
         return view('checkout', compact('bookingData'));
     }
-
 
     public function processCheckout(Request $request)
     {
@@ -56,9 +55,10 @@ class CheckoutController extends Controller
             $booking->status = 'pending';
             $booking->save();
         }
+
         // Clear the booking data from the session
         $request->session()->forget('booking_data');
 
-        return redirect()->route('home')->with('success', 'Booking completed successfully.');
+        return redirect()->route('session')->with('checkout_id', $checkout->id);
     }
 }
