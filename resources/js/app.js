@@ -129,27 +129,43 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-// hotel bookmark
-document.querySelectorAll('.bookmark-btn').forEach(button => {
-    button.addEventListener('click', function () {
-        const hotelId = this.dataset.hotelId;
-        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+// bookmark
+document.addEventListener('DOMContentLoaded', function () {
+    const bookmarkButtons = document.querySelectorAll('.bookmark-btn');
 
-        fetch(`/hotels/${hotelId}/bookmark`, {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': csrfToken,
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        }).then(response => {
-            if (response.ok) {
-                // console.log('Hotel bookmarked successfully');
-            } else {
-                // console.error('Failed to bookmark hotel');
-            }
-        }).catch(error => {
-            console.error('Error occurred while bookmarking hotel:', error);
+    bookmarkButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            const entityId = button.getAttribute('data-entityId');
+            const entityType = button.getAttribute('data-entityType');
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            fetch(`/${entityType}s/${entityId}/bookmark`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            }).then(data => {
+                if (data.success) {
+                    alert('bookmarked successfully')
+                } else if (data.error) {
+                    alert('An error occurred while bookmarking.')
+                }
+            }).catch(error => {
+                console.error('Error bookmarking:', error.message);
+                alert('An error occurred while bookmarking.')
+            });
         });
     });
 });
+
+
+
+
+

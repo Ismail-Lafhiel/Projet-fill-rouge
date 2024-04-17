@@ -13,8 +13,8 @@ class Bookmark extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function hotel()
+    public function bookmarkable()
     {
-        return $this->belongsTo(Hotel::class);
+        return $this->morphTo();
     }
 }

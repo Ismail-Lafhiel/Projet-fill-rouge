@@ -43,5 +43,10 @@ class Room extends Model
     {
         return $this->belongsToMany(RoomOffer::class);
     }
+
+    public function bookmarks()
+    {
+        return $this->morphMany(Bookmark::class, 'bookmarkable');
+    }
     
 }

@@ -30,6 +30,6 @@ class Hotel extends Model
     }
     public function bookmarks()
     {
-        return $this->hasMany(Bookmark::class);
+        return $this->morphMany(Bookmark::class, 'bookmarkable');
     }
 }

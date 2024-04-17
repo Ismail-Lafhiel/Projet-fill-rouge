@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\LocationController;
@@ -45,9 +46,8 @@ Route::middleware('auth')->group(function () {
     // profile
     Route::get('/profile', [MainContentController::class, 'getUserInformation'])->name("user.profile");
     // bookmarks
-    // hotel bookmarks
-    Route::post('/hotels/{hotel}/bookmark', [HotelController::class, 'bookmark'])->name('hotels.bookmark');
-    Route::get('/hotels/bookmarks', [HotelController::class, 'bookmarks'])->name('hotels.bookmarks');
+    Route::post('/rooms/{roomId}/bookmark', [BookmarkController::class, 'bookmarkRoom']);
+    Route::post('/hotels/{hotelId}/bookmark', [BookmarkController::class, 'bookmarkHotel']);
     // booking
     Route::post('/book/{room}', [RoomController::class, 'bookRoom'])->name("bookRoom");
     Route::get('{user}/bookings', [MainContentController::class, 'user_bookings'])->name('user.bookings');
