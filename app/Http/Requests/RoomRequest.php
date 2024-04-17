@@ -26,7 +26,6 @@ class RoomRequest extends FormRequest
             'hotel_id' => 'required|exists:hotels,id',
             'description' => 'required|string',
             'availability' => 'required|string|in:available,not available',
-            'number_of_beds' => 'required|integer|min:1',
             'room_type_id' => 'required|exists:room_types,id',
             'price' => 'required|numeric|min:0',
             'photos.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',

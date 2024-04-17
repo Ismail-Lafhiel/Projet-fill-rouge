@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string("reference");
             $table->enum('availability', ["available", 'not available']);
-            $table->integer("number_of_beds");
             $table->longText("description");
             $table->float("price");
             $table->unsignedBigInteger("hotel_id");

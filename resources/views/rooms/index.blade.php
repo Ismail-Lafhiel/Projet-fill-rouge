@@ -157,7 +157,6 @@
                                         <th scope="col" class="px-4 py-3">id</th>
                                         <th scope="col" class="px-4 py-3">Reference</th>
                                         <th scope="col" class="px-4 py-3">price</th>
-                                        <th scope="col" class="px-4 py-3">number of beds</th>
                                         <th scope="col" class="px-4 py-3">room type</th>
                                         <th scope="col" class="px-4 py-3">room offers</th>
                                         <th scope="col" class="px-4 py-3">Availability</th>
@@ -176,7 +175,6 @@
                                                 class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                                 {{ $room->reference }}</th>
                                             <td class="px-4 py-3">{{ $room->price }}</td>
-                                            <td class="px-4 py-3">{{ $room->number_of_beds }}</td>
                                             <td class="px-4 py-3">{{ $room->roomType->name }}</td>
                                             <td class="px-4 py-3">{{ implode(', ', $room->roomOffers->pluck('service')->toArray()) }}</td>
                                             <td class="px-4 py-3">{{ $room->availability }}</td>
@@ -305,7 +303,7 @@
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="Type event description"></textarea>
                             </div>
-                            <div class="sm:col-span-2">
+                            <div>
                                 <label for="room_offers"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Room Offers</label>
                                 <select name="room_offers[]" id="room_offers" multiple
@@ -325,14 +323,6 @@
                                     <option value="available">Available</option>
                                     <option value="not available">Not Available</option>
                                 </select>
-                            </div>
-                            <div>
-                                <label for="number_of_beds"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Number of
-                                    Beds</label>
-                                <input type="text" name="number_of_beds" id="number_of_beds"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="Type number of rooms">
                             </div>
                             <div>
                                 <label for="room_type"

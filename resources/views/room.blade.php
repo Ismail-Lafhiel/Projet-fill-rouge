@@ -90,9 +90,14 @@
                 <div class="mt-8">
                     <h3 class="text-lg font-bold text-gray-800">What this place offers</h3>
                     <ul class="space-y-3 list-disc mt-6 pl-4 text-sm text-gray-400">
-                        <li class="capitalize">{{ $room->number_of_beds }} beds</li>
-                        @if ($room->roomOffer->isNotEmpty())
-                            <li class="capitalize">{{ $room->number_of_beds }} beds</li>
+                        @if ($room->roomOffers->isNotEmpty())
+                            @foreach ($room->roomOffers as $roomOffer)
+                                <li class="flex align-baseline"> <img class="w-5 h-5"
+                                        src="{{ asset('storage/' . $roomOffer->image_path) }}" alt=""><span
+                                        class="ml-2 capitalize">{{ $roomOffer->service }}</span></li>
+                            @endforeach
+                        @else
+                            <p>No special offers for this room</p>
                         @endif
                     </ul>
                 </div>

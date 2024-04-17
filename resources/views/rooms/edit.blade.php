@@ -144,12 +144,14 @@
                                 </select>
                             </div>
                             <div>
-                                <label for="number_of_beds"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Number of
-                                    Beds</label>
-                                <input type="text" name="number_of_beds" id="number_of_beds"
-                                    value="{{ $room->number_of_beds }}"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                <label for="room_offers"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Room Offers</label>
+                                <select name="room_offers[]" id="room_offers" multiple
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                    @foreach ($room_offers as $room_offer)
+                                        <option value="{{ $room_offer->id }}">{{ $room_offer->service }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div>
                                 <label for="room_type"

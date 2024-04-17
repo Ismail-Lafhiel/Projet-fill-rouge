@@ -15,8 +15,10 @@ class MainContentController extends Controller
     public function index()
     {
         $locations = Location::orderBy("created_at", "desc")->take(6)->get();
+        $locationsInMorocco = Location::where("country", "like",  "%Morocco%")->take(6)->get();
         $hotels = Hotel::orderBy('rating', 'desc')->take(6)->get();
-        return view("home", compact("locations", "hotels"));
+        $rooms = Room::orderBy('rating', 'desc')->take(6)->get();
+        return view("home", compact("locations", "hotels" ,"locationsInMorocco", 'rooms'));
     }
 
     public function destinations()

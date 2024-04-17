@@ -13,7 +13,6 @@ class Room extends Model
     protected $fillable = [
         'reference',
         'availability',
-        'number_of_beds',
         'description',
         'price',
         'hotel_id',

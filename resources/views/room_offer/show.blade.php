@@ -17,7 +17,12 @@
 
                             </div>
                         </div>
-                        <a href="{{route('roomoffers.index')}}" class="text-white inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                        <div class="grid grid-cols-5 gap-4 my-10">
+                            <img class="thumbnail h-auto max-w-full rounded-lg"
+                                src="{{ asset('storage/room_offers/' . $roomOffer->image_path) }}" alt="Room Photo">
+                        </div>
+                        <a href="{{ route('roomoffers.index') }}"
+                            class="text-white inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                             Go back
                         </a>
                     </form>
