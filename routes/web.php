@@ -6,6 +6,7 @@ use App\Http\Controllers\HotelController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MainContentController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\RoomOfferController;
 use App\Http\Controllers\RoomTypeController;
 use App\Http\Controllers\StripeController;
 use Illuminate\Support\Facades\Route;
@@ -78,6 +79,8 @@ Route::middleware([
     Route::resource('roomtype', RoomTypeController::class);
     // location routes
     Route::resource('locations', LocationController::class);
+    // room_offer routes 
+    Route::resource('roomoffers', RoomOfferController::class);
     // admin dashboard
     Route::get('/dashboard', function () {
         return view("admin.index");

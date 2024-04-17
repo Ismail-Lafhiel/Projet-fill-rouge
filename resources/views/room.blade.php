@@ -87,12 +87,15 @@
                     <p class="text-sm text-gray-400 mt-4">{{ $room->description }}
                     </p>
                 </div>
-                <ul class="space-y-3 list-disc mt-6 pl-4 text-sm text-gray-400">
-                    <li class="capitalize">{{ $room->number_of_beds }} beds</li>
-                    <li class="capitalize">bathroom</li>
-                    <li class="capitalize">breakfast and lunch</li>
-                    <li class="capitalize">wifi free</li>
-                </ul>
+                <div class="mt-8">
+                    <h3 class="text-lg font-bold text-gray-800">What this place offers</h3>
+                    <ul class="space-y-3 list-disc mt-6 pl-4 text-sm text-gray-400">
+                        <li class="capitalize">{{ $room->number_of_beds }} beds</li>
+                        @if ($room->roomOffer->isNotEmpty())
+                            <li class="capitalize">{{ $room->number_of_beds }} beds</li>
+                        @endif
+                    </ul>
+                </div>
             </div>
         </div>
     </section>

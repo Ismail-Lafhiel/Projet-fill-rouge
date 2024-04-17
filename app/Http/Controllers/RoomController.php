@@ -7,6 +7,7 @@ use App\Http\Requests\RoomRequest;
 use App\Models\Booking;
 use App\Models\Hotel;
 use App\Models\Room;
+use App\Models\RoomOffer;
 use App\Models\RoomType;
 use App\Repositories\Interfaces\RoomRepositoryInterface;
 use App\Rules\StartDateNotBeforeToday;
@@ -28,13 +29,21 @@ class RoomController extends Controller
         $rooms = $this->roomRepository->getAll();
         $hotels = Hotel::all();
         $room_types = RoomType::all();
-        return view("rooms.index", compact("rooms", "hotels", "room_types"));
+        $room_offers = RoomOffer::all();
+        return view("rooms.index", compact("rooms", "hotels", "room_types", "room_offers"));
     }
 
     public function store(RoomRequest $request)
     {
         $data = $request->validated();
+
+        // Create the room
         $room = $this->roomRepository->create($data);
+
+        // Attach room offers
+        if ($request->has('room_offers')) {
+            $room->roomOffers()->attach($request->room_offers);
+        }
 
         // Handle image upload
         if ($request->hasFile('photos')) {
@@ -44,12 +53,14 @@ class RoomController extends Controller
             }
         }
 
+        // Update number of rooms for the hotel
         $hotel = Hotel::findOrFail($request->hotel_id);
         $hotel->number_of_rooms = $hotel->rooms()->count();
         $hotel->save();
 
         return redirect()->back()->with('success', 'Room created successfully.');
     }
+
 
 
     public function show(Room $room)

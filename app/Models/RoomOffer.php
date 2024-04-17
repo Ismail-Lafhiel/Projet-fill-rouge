@@ -10,16 +10,12 @@ class RoomOffer extends Model
     use HasFactory;
 
     protected $fillable = [
-        'wifi',
-        'bathtub',
-        'tv',
-        'meals',
-        'cleaning',
-        'parking',
-        'beach_view',
+        'service',
+        'image_path'
     ];
 
-    public function rooms(){
-        return $this->hasMany(Room::class);
+    public function rooms()
+    {
+        return $this->belongsToMany(Room::class);
     }
 }

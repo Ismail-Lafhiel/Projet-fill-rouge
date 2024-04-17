@@ -31,12 +31,16 @@ class RoomRequest extends FormRequest
             'price' => 'required|numeric|min:0',
             'photos.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'rating' => 'required|numeric|between:0,5',
+            'room_offers' => 'nullable|array',
+            'room_offers.*' => 'exists:room_offers,id',
         ];
     }
-    public function messages(){
+    public function messages()
+    {
         return [
             'hotel_id.required' => "Hotel is required",
             'room_type_id.required' => "Room type is required",
+            'room_offers.*.exists' => "Invalid room offer selected",
         ];
     }
 }
