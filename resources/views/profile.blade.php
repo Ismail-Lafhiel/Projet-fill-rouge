@@ -1,20 +1,7 @@
 <x-app-layout>
     <x-header />
     <div class="flex-col w-full md:flex md:flex-row md:min-h-screen">
-        <div @click.away="open = false"
-            class="flex flex-col flex-shrink-0 w-full text-gray-700 bg-white md:w-64 dark:text-gray-200 dark:bg-gray-800"
-            x-data="{ open: false }">
-            <div class="flex flex-row items-center justify-between flex-shrink-0 mx-auto my-8">
-                {{-- <x-dashboard-logo /> --}}
-            </div>
-            <nav :class="{ 'block': open, 'hidden': !open }"
-                class="flex-grow px-4 pb-4 md:block md:pb-0 md:overflow-y-auto">
-                <x-profile-link :active="request()->routeIs('user.profile')" href="{{ route('user.profile') }}">Profile
-                </x-profile-link>
-                <x-profile-link :active="request()->routeIs('user.bookings', $user->id)" href="{{ route('user.bookings', $user->id) }}">Booking
-                </x-profile-link>
-            </nav>
-        </div>
+        <x-user_side_nav :user_id='$user->id'/>
         <div class="flex w-full bg-slate-50">
             <div class="p-6">
                 <div class="p-8 bg-white shadow mt-24">

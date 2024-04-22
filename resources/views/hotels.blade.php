@@ -45,10 +45,10 @@
 
                         <div class="group inline-flex rounded-xl bg-primary-100 p-2 hover:bg-primary-200">
                             <button type="button" class="bookmark-btn focus:outline-none"
-                                    data-entityId="{{ $hotel->id }}" data-entityType="hotel">
+                                data-entityId="{{ $hotel->id }}" data-entityType="hotel">
                                 <svg xmlns="http://www.w3.org/2000/svg"
-                                     class="h-4 w-4 text-primary-400 group-hover:text-primary-500"
-                                     viewBox="0 0 20 20" fill="currentColor">
+                                    class="h-4 w-4 text-primary-400 group-hover:text-primary-500"
+                                    viewBox="0 0 20 20" fill="currentColor">
                                     <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" />
                                 </svg>
                             </button>
@@ -56,8 +56,8 @@
                     </div>
                 </div>
             </div>
-        @endforeach
-    </div>
+            @endforeach
+        </div>
     <div class="px-2 py-10">
         {!! $hotels->links() !!}
     </div>

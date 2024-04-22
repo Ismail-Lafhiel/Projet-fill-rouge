@@ -72,7 +72,8 @@ class RoomController extends Controller
     {
         $hotels = Hotel::all();
         $room_types = RoomType::all();
-        return view("rooms.edit", compact("room", "hotels", "room_types"));
+        $room_offers = RoomOffer::all();
+        return view("rooms.edit", compact("room", "hotels", "room_types", "room_offers"));
     }
 
     public function update(RoomRequest $request, Room $room)

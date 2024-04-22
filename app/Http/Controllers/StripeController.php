@@ -88,6 +88,6 @@ class StripeController extends Controller
             return "No bookings found for this checkout.";
         }
 
-        return "Thanks for your order. Your payment has been successfully processed.";
+        return view('success');
     }
 }

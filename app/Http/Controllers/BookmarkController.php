@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bookmark;
+use App\Models\Hotel;
+use App\Models\Room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class BookmarkController extends Controller
@@ -31,13 +34,11 @@ class BookmarkController extends Controller
             return response()->json(['error' => 'Invalid entity type'], 400);
         }
 
-        // Retrieve the authenticated user
         $user = auth()->user();
 
         // Determine the model class based on $entityType
         $modelClass = 'App\Models\\' . ucfirst($entityType);
 
-        // Find the entity by ID
         $entity = $modelClass::findOrFail($entityId);
 
         // Check if the entity is already bookmarked by the user
@@ -57,5 +58,42 @@ class BookmarkController extends Controller
             // Return error response if already bookmarked
             return response()->json(['error' => ucfirst($entityType) . ' already bookmarked'], 400)->header('X-Bookmark-Error', ucfirst($entityType) . ' already bookmarked');
         }
+    }
+
+    public function index()
+    {
+        $user = auth()->user();
+
+        $bookmarkedHotels = $user->bookmarks()->where('bookmarkable_type', Hotel::class)->get();
+        $bookmarkedRooms = $user->bookmarks()->where('bookmarkable_type', Room::class)->get();
+        // dd($bookmarkedRooms, $bookmarkedHotels);
+        return view('bookmarks', compact('bookmarkedHotels', 'bookmarkedRooms', 'user'));
+    }
+
+    public function cancelBookmarkHotel($bookmarkId)
+    {
+        $bookmark = Bookmark::findOrFail($bookmarkId);
+
+        // Check if the authenticated user owns the bookmark
+        if (Auth::id() !== $bookmark->user_id) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+        $bookmark->delete();
+
+        return response()->json(['success' => 'Bookmark canceled successfully']);
+    }
+    public function cancelBookmarkedRoom($bookmarkId)
+    {
+        $bookmark = Bookmark::findOrFail($bookmarkId);
+
+        // Check if the authenticated user owns the bookmark
+        if (Auth::id() !== $bookmark->user_id) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+        $bookmark->delete();
+
+        return response()->json(['success' => 'Bookmark canceled successfully']);
     }
 }

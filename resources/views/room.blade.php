@@ -59,17 +59,10 @@
                     </div>
                     <hr class="my-8" />
                     <div class="flex flex-wrap gap-4">
-                        @if ($room->availability === 'available')
-                            <button type="button" id="bookingModalButton" data-modal-target="bookingModal"
-                                data-modal-toggle="bookingModal"
-                                class="min-w-[200px] px-4 py-3 bg-primary-800 hover:bg-primary-900 text-white text-sm font-bold rounded">book
-                                now</button>
-                        @else
-                            <button type="button" disabled
-                                class="min-w-[200px] px-4 py-3 bg-gray-300 cursor-not-allowed text-sm font-bold rounded">Not
-                                available
-                            </button>
-                        @endif
+                        <button type="button" id="bookingModalButton" data-modal-target="bookingModal"
+                            data-modal-toggle="bookingModal"
+                            class="min-w-[200px] px-4 py-3 bg-primary-800 hover:bg-primary-900 text-white text-sm font-bold rounded">book
+                            now</button>
                         <button type="button"
                             class="min-w-[200px] px-4 py-2.5 border border-primary-800 bg-transparent hover:bg-primary-50 text-primary-800 text-sm font-bold rounded">Continue
                             browsing</button>
