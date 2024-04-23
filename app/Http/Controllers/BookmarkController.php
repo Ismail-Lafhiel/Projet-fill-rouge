@@ -11,54 +11,6 @@ use Illuminate\Support\Facades\Log;
 
 class BookmarkController extends Controller
 {
-    // Bookmark room
-    public function bookmarkRoom($roomId)
-    {
-        return $this->bookmark('room', $roomId);
-    }
-
-    // Bookmark hotel
-    public function bookmarkHotel($hotelId)
-    {
-        return $this->bookmark('hotel', $hotelId);
-    }
-
-    // Bookmark entity
-    public function bookmark($entityType, $entityId)
-    {
-        Log::info('Entity Type: ' . $entityType);
-        Log::info('Entity ID: ' . $entityId);
-
-        // Check if $entityType is valid (hotel or room)
-        if (!in_array($entityType, ['hotel', 'room'])) {
-            return response()->json(['error' => 'Invalid entity type'], 400);
-        }
-
-        $user = auth()->user();
-
-        // Determine the model class based on $entityType
-        $modelClass = 'App\Models\\' . ucfirst($entityType);
-
-        $entity = $modelClass::findOrFail($entityId);
-
-        // Check if the entity is already bookmarked by the user
-        $isBookmarked = $user->bookmarks()->where('bookmarkable_type', $modelClass)->where('bookmarkable_id', $entityId)->exists();
-
-        if (!$isBookmarked) {
-            // Create a new bookmark
-            $bookmark = new Bookmark();
-            $bookmark->user_id = $user->id;
-            $bookmark->bookmarkable_type = $modelClass;
-            $bookmark->bookmarkable_id = $entityId;
-            $bookmark->save();
-
-            // Return success response
-            return response()->json(['success' => ucfirst($entityType) . ' bookmarked successfully'])->header('X-Bookmark-Success', ucfirst($entityType) . ' bookmarked successfully');
-        } else {
-            // Return error response if already bookmarked
-            return response()->json(['error' => ucfirst($entityType) . ' already bookmarked'], 400)->header('X-Bookmark-Error', ucfirst($entityType) . ' already bookmarked');
-        }
-    }
 
     public function index()
     {
@@ -69,31 +21,78 @@ class BookmarkController extends Controller
         // dd($bookmarkedRooms, $bookmarkedHotels);
         return view('bookmarks', compact('bookmarkedHotels', 'bookmarkedRooms', 'user'));
     }
-
-    public function cancelBookmarkHotel($bookmarkId)
+    // Bookmark a room
+    public function bookmarkRoom(Request $request)
     {
-        $bookmark = Bookmark::findOrFail($bookmarkId);
+        $userId = auth()->id();
+        $roomId = $request->input('entity_id');
 
-        // Check if the authenticated user owns the bookmark
-        if (Auth::id() !== $bookmark->user_id) {
-            return response()->json(['error' => 'Unauthorized'], 403);
-        }
+        $message = $this->toggleBookmark('room', $userId, $roomId);
 
-        $bookmark->delete();
-
-        return response()->json(['success' => 'Bookmark canceled successfully']);
+        return response()->json(['message' => $message]);
     }
-    public function cancelBookmarkedRoom($bookmarkId)
+
+    // Cancel bookmark for a room
+    public function cancelRoomBookmark(Request $request)
     {
-        $bookmark = Bookmark::findOrFail($bookmarkId);
+        $userId = auth()->id();
+        $roomId = $request->input('entity_id');
 
-        // Check if the authenticated user owns the bookmark
-        if (Auth::id() !== $bookmark->user_id) {
-            return response()->json(['error' => 'Unauthorized'], 403);
+        $message = $this->toggleBookmark('room', $userId, $roomId, false);
+
+        return response()->json(['message' => $message]);
+    }
+
+    // Cancel bookmark for a room
+    public function cancelRoomBookmark(Request $request, $id)
+    {
+        $userId = auth()->id();
+
+        $message = $this->toggleBookmark('room', $userId, $id, false);
+
+        return response()->json(['message' => $message]);
+    }
+
+    // Cancel bookmark for a hotel
+    public function cancelHotelBookmark(Request $request, $id)
+    {
+        $userId = auth()->id();
+
+        $message = $this->toggleBookmark('hotel', $userId, $id, false);
+
+        return response()->json(['message' => $message]);
+    }
+
+
+    // Helper method to toggle bookmarks
+    protected function toggleBookmark($entityType, $userId, $entityId, $add = true)
+    {
+        $entityClass = 'App\\Models\\' . ucfirst($entityType);
+
+        $bookmark = Bookmark::where([
+            ['user_id', $userId],
+            ['bookmarkable_id', $entityId],
+            ['bookmarkable_type', $entityClass],
+        ])->first();
+
+        if ($add) {
+            if ($bookmark) {
+                return $entityType . ' already bookmarked';
+            } else {
+                Bookmark::create([
+                    'user_id' => $userId,
+                    'bookmarkable_id' => $entityId,
+                    'bookmarkable_type' => $entityClass,
+                ]);
+                return $entityType . ' bookmarked successfully';
+            }
+        } else {
+            if ($bookmark) {
+                $bookmark->delete();
+                return $entityType . ' bookmark removed successfully';
+            } else {
+                return $entityType . ' is not bookmarked';
+            }
         }
-
-        $bookmark->delete();
-
-        return response()->json(['success' => 'Bookmark canceled successfully']);
     }
 }

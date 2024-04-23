@@ -130,41 +130,92 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // bookmark
-document.addEventListener('DOMContentLoaded', function () {
-    const bookmarkButtons = document.querySelectorAll('.bookmark-btn');
+function showToast(type, message) {
+    const toastElement = document.getElementById(`toast-${type}`);
 
-    bookmarkButtons.forEach(function (button) {
-        button.addEventListener('click', function () {
-            const entityId = button.getAttribute('data-entityId');
-            const entityType = button.getAttribute('data-entityType');
-            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    if (toastElement) {
+        toastElement.querySelector('.font-normal').textContent = message;
 
-            fetch(`/${entityType}s/${entityId}/bookmark`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': csrfToken,
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
+        toastElement.style.display = 'block';
+
+        setTimeout(() => {
+            toastElement.style.display = 'none';
+        }, 3000);
+    }
+}
+
+document.querySelectorAll('.bookmark-btn').forEach(button => {
+    button.addEventListener('click', function () {
+        const entityId = this.getAttribute('data-entityid');
+        const entityType = this.getAttribute('data-entitytype');
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        fetch(`/bookmark/${entityType}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken,
+            },
+            body: JSON.stringify({
+                entity_id: entityId,
+            }),
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to bookmark');
                 }
-            }).then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+            })
+            .then(data => {
+                // console.log(data.message);
+                showToast('success', data.message);
+                if (button.querySelector('svg').classList.contains('text-primary-400')) {
+                    button.querySelector('svg').classList.replace('text-primary-400', 'text-primary-500');
                 }
-                return response.json();
-            }).then(data => {
-                if (data.success) {
-                    alert('bookmarked successfully')
-                } else if (data.error) {
-                    alert('An error occurred while bookmarking.')
+            })
+            .catch(error => {
+                // console.error(error.message);
+                if (error.message.includes('already bookmarked')) {
+                    showToast('error', error.message);
+                } else {
+                    showToast('error', 'Failed to bookmark');
                 }
-            }).catch(error => {
-                console.error('Error bookmarking:', error.message);
-                alert('An error occurred while bookmarking.')
             });
-        });
     });
 });
+// cancel bookmark
+document.querySelectorAll('.deleteButton').forEach(button => {
+    button.addEventListener('click', function () {
+        const entityId = this.getAttribute('data-entityid');
+        const entityType = this.getAttribute('data-entitytype');
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
+        fetch(`/bookmark/${entityType}/${entityId}`, { // Make sure the URL is correct
+            method: 'DELETE', // Use DELETE method for canceling bookmarks
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken,
+            },
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to cancel bookmark'); // Handle error
+                }
+            })
+            .then(data => {
+                // Handle success
+                showToast('success', data.message);
+                // Update UI if necessary
+            })
+            .catch(error => {
+                // Handle error
+                showToast('error', error.message);
+            });
+    });
+});
 
 
 

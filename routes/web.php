@@ -46,13 +46,12 @@ Route::middleware('auth')->group(function () {
     // profile
     Route::get('/profile', [MainContentController::class, 'getUserInformation'])->name("user.profile");
     // bookmarks
-    Route::post('/rooms/{roomId}/bookmark', [BookmarkController::class, 'bookmarkRoom']);
     Route::get('/bookmarks', [BookmarkController::class, 'index'])->name('bookmarks.index');
-    Route::delete('/cancel-bookmarked-hotel/{bookmarkId}', [BookmarkController::class, 'cancelBookmarkHotel'])
-        ->name('cancel.bookmarkedHotel');
-    Route::delete('cancel/bookmarkedRoom/{bookmarkId}', 'BookmarkController@cancelBookmarkedRoom')
-        ->name('cancel.bookmarkedRoom');
-    // booking
+    Route::post('/bookmark/room', [BookmarkController::class, 'bookmarkRoom'])->name('bookmark.room');
+    Route::delete('/bookmark/room/{id}', [BookmarkController::class, 'cancelRoomBookmark'])->name('bookmark.room.cancel');
+    Route::post('/bookmark/hotel', [BookmarkController::class, 'bookmarkHotel'])->name('bookmark.hotel');
+    Route::delete('/bookmark/hotel/{id}', [BookmarkController::class, 'cancelHotelBookmark'])->name('bookmark.hotel.cancel');
+        // booking
     Route::post('/book/{room}', [RoomController::class, 'bookRoom'])->name("bookRoom");
     Route::get('{user}/bookings', [MainContentController::class, 'user_bookings'])->name('user.bookings');
     // checkout
