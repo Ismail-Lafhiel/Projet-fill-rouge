@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", function () {
         'url("http://127.0.0.1:8000/storage/slider_imgs/nyc.jpg")',
         'url("http://127.0.0.1:8000/storage/slider_imgs/pyramid.jpg")',
         'url("http://127.0.0.1:8000/storage/slider_imgs/maldives.jpg")',
-        // Add more background image URLs here
     ];
 
     let currentBackgroundIndex = 0;

@@ -17,7 +17,8 @@ class Room extends Model
         'price',
         'hotel_id',
         'rating',
-        'room_type_id'
+        'room_type_id',
+        "number_of_guests"
     ];
 
     public function photos()

@@ -32,6 +32,7 @@ class RoomRequest extends FormRequest
             'rating' => 'required|numeric|between:0,5',
             'room_offers' => 'nullable|array',
             'room_offers.*' => 'exists:room_offers,id',
+            'number_of_guests' => 'required|integer|min:1'
         ];
     }
     public function messages()
@@ -40,6 +41,9 @@ class RoomRequest extends FormRequest
             'hotel_id.required' => "Hotel is required",
             'room_type_id.required' => "Room type is required",
             'room_offers.*.exists' => "Invalid room offer selected",
+            'number_of_guests.required' => "Number of guests is required",
+            'number_of_guests.integer' => "Number of guests must be an integer",
+            'number_of_guests.min' => "Number of guests must be at least :min",
         ];
     }
 }

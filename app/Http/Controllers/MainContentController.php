@@ -6,6 +6,7 @@ use App\Models\Booking;
 use App\Models\Hotel;
 use App\Models\Location;
 use App\Models\Room;
+use App\Models\RoomType;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,7 +40,8 @@ class MainContentController extends Controller
     public function hotels()
     {
         $hotels = Hotel::with('photos')->orderBy('rating', 'desc')->paginate(10);
-        return view("hotels", compact("hotels"));
+        $locations = Location::all();
+        return view("hotels", compact("hotels", "locations"));
     }
     public function hotel(Hotel $hotel)
     {
@@ -49,7 +51,8 @@ class MainContentController extends Controller
     public function rooms()
     {
         $rooms = Room::with('photos')->orderBy('rating', 'desc')->paginate(10);
-        return view("rooms", compact("rooms"));
+        $room_types = RoomType::all();
+        return view("rooms", compact("rooms", "room_types"));
     }
     public function room(Room $room)
     {

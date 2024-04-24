@@ -160,6 +160,7 @@
                                         <th scope="col" class="px-4 py-3">room type</th>
                                         <th scope="col" class="px-4 py-3">room offers</th>
                                         <th scope="col" class="px-4 py-3">Availability</th>
+                                        <th scope="col" class="px-4 py-3">number od guests</th>
                                         <th scope="col" class="px-4 py-3">Hotel</th>
                                         <th scope="col" class="px-4 py-3">rating</th>
                                         <th scope="col" class="px-4 py-3">
@@ -176,8 +177,10 @@
                                                 {{ $room->reference }}</th>
                                             <td class="px-4 py-3">{{ $room->price }}</td>
                                             <td class="px-4 py-3">{{ $room->roomType->name }}</td>
-                                            <td class="px-4 py-3">{{ implode(', ', $room->roomOffers->pluck('service')->toArray()) }}</td>
+                                            <td class="px-4 py-3">
+                                                {{ implode(', ', $room->roomOffers->pluck('service')->toArray()) }}</td>
                                             <td class="px-4 py-3">{{ $room->availability }}</td>
+                                            <td class="px-4 py-3">{{ $room->number_of_guests }}</td>
                                             <td class="px-4 py-3">{{ $room->hotel->name }}</td>
                                             <td class="px-4 py-3">{{ $room->rating }}/5 stars</td>
                                             <td class="px-4 py-3 flex items-center justify-end">
@@ -295,7 +298,7 @@
                                 </select>
 
                             </div>
-                            <div class="sm:col-span-2">
+                            <div>
                                 <label for="description"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hotel
                                     Description</label>
@@ -304,8 +307,23 @@
                                     placeholder="Type event description"></textarea>
                             </div>
                             <div>
+                                <label for="number_of_guests"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Number of
+                                    guests</label>
+                                <select name="number_of_guests" id="number_of_guests"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                    <option value="#">Select a number</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                            <div>
                                 <label for="room_offers"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Room Offers</label>
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Room
+                                    Offers</label>
                                 <select name="room_offers[]" id="room_offers" multiple
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                     @foreach ($room_offers as $room_offer)

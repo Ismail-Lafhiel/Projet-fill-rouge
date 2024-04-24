@@ -1,49 +1,59 @@
 <x-guest-layout>
     <x-header />
-    <section class="bg-white relative dark:bg-gray-900" id="background-slider"
-        style="background: url('http://127.0.0.1:8000/storage/slider_imgs/greece.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center; padding-top: 120px; padding-bottom: 120px; position: relative;">
-        <div class="bg-black opacity-50 absolute inset-0 z-0"></div> <!-- Overlay element -->
-        <div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12 relative z-10">
-            <div class="mr-auto place-self-center lg:col-span-7">
-                <h1
-                    class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl text-white">
-                    Where Luxury Meets Comfort</h1>
-                <p class="max-w-2xl mb-6 font-medium text-gray-200 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
-                    EliteStay, Your Ultimate Retreat!</p>
+    <section class="relative bg-cover bg-center bg-fixed" id="background-slider"
+        style="background-image: url('http://127.0.0.1:8000/storage/slider_imgs/greece.jpg');">
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+        <div class="container mx-auto px-4 py-16 relative z-10 text-white">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mt-10 mb-6">Where Luxury Meets
+                    Comfort</h1>
+                <p class="text-lg md:text-2xl mb-8">EliteStay, Your Ultimate Retreat!</p>
                 <a href="{{ route('login') }}"
-                    class="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">Sign
+                    class="inline-block px-8 py-3 bg-primary-700 hover:bg-primary-800 rounded-lg text-lg font-semibold tracking-wider transition duration-300">Sign
                     in / Register</a>
             </div>
         </div>
-        <form class="mx-auto absolute top-[95%] left-[50%] translate-x-[-50%] flex">
-            <div class="border-4 border-blue-500 rounded-s-lg w-full">
-                <div class="relative">
-                    <input type="search" id="default-search"
-                        class="block w-full p-4 text-sm text-gray-900 focus:ring-0 border-none bg-gray-50"
-                        placeholder="Where are you going?" required />
+        <div class="container mx-auto px-4 pb-8 relative z-20 text-white">
+            <form class="mx-auto bg-slate-100 bg-opacity-60 rounded-xl p-6 shadow-xl">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div>
+                        <label for="city" class="text-sm font-medium">Destination</label>
+                        <input type="text" id="city" placeholder="Search destinations"
+                            class="text-gray-600 mt-2 block w-full rounded-md border border-primary-300 px-3 py-2 focus:outline-none" />
+                    </div>
+                    <div>
+                        <label for="checkin" class="text-sm font-medium">Checkin</label>
+                        <input type="date" id="checkin" name=checkin"
+                            class="mt-2 block w-full text-gray-600 rounded-md border border-primary-300 px-3 py-2 focus:outline-none" />
+                    </div>
+                    <div>
+                        <label for="checkout" class="text-sm font-medium">Checkout</label>
+                        <input type="date" id="checkout" name="checkout"
+                            class="mt-2 block w-full text-gray-600 rounded-md border border-primary-300 px-3 py-2 focus:outline-none" />
+                    </div>
+                    <div>
+                        <label for="status" class="text-sm font-medium">Add guests</label>
+                        <select id="status"
+                            class="mt-2 block w-full rounded-md border border-primary-300 px-3 py-2 focus:outline-none text-gray-600">
+                            <option class="text-gray-400" value="#">Select a number</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="border-4 border-l-0 border-blue-500 hidden md:block w-full">
-                <div class="relative">
-                    <input id="start" name="start" type="text" onfocus="(this.type='date')"
-                        placeholder="Check in" onblur="(this.type='text')"
-                        class="block text-center w-full p-4 text-md text-gray-900 focus:ring-0 border-none bg-gray-50" />
+                <div class="mt-6 flex justify-end">
+                    <button
+                        class="mr-4 px-20 py-2 text-md bg-white text-gray-700 rounded-lg hover:bg-gray-100 hover:text-black focus:outline-none focus:ring focus:ring-gray-100 transition duration-100"
+                        type="reset">Reset</button>
+                    <button
+                        class="px-20 py-2 text-md bg-primary-600 text-white rounded-lg hover:bg-primary-700 focus:outline-none focus:ring focus:ring-primary-300 transition duration-300" type="submit">Search</button>
                 </div>
-            </div>
-            <div class="border-4 border-l-0 border-blue-500 hidden md:block w-full">
-                <div class="relative">
-                    <input id="end" name="end" type="text" onfocus="(this.type='date')"
-                        placeholder="Check out" onblur="(this.type='text')"
-                        class="block text-center w-full p-4 text-md text-gray-900 border-none bg-gray-50 focus:ring-0" />
-                </div>
-            </div>
-            <div class="border-4 border-l-0 border-blue-500 rounded-e-xl">
-                <button type="button"
-                    class="block w-full p-4 px-10 text-md rounded-e-lg bg-primary-600 text-white">Search</button>
-            </div>
-        </form>
+            </form>
+        </div>
     </section>
-
     <section class="container mx-auto px-5 py-2 lg:px-32 lg:pt-24">
         <h2 class="max-w-2xl mb-4 text-xl font-bold tracking-tight leading-none md:text-2xl xl:text-3xl text-gray-900">
             Latest destinations</h2>

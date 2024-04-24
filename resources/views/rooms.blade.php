@@ -52,10 +52,27 @@
                 </button>
             </div>
         </div>
-        <h1 class="max-w-2xl mb-4 text-3xl font-bold tracking-tight leading-none md:text-4xl xl:text-5xl text-gray-900">
-            All Rooms</h1>
-        <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 text-sm md:text-md lg:text-lg">View all rooms
-            from different hotels</p>
+        <div class="flex justify-between my-10 md:mt-0">
+            <div>
+                <h1
+                    class="max-w-2xl mb-4 text-3xl font-bold tracking-tight leading-none md:text-4xl xl:text-5xl text-gray-900">
+                    All Rooms</h1>
+                <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 text-sm md:text-md lg:text-lg">View all rooms
+                    from different hotels</p>
+            </div>
+            <form class="flex flex-col md:flex-row gap-3">
+                <div class="flex">
+                    <input type="text" placeholder="Search for your prefered room"
+                        class="w-full md:w-80 px-3 h-10 border-2  focus:outline-none focus:border-none rounded-lg">
+                </div>
+                <select id="room_type_id" name="room_type_id" class="w-full h-10 border-2  focus:outline-none focus:border-none text-gray-600 px-2 md:px-3 py-0 md:py-1 tracking-wider rounded-lg">
+                    <option value="#" class="text-gray-500" selected>All</option>
+                    @foreach ($room_types as $room_type)
+                        <option value="{{ $room_type->id }}">{{ $room_type->name }}</option>
+                    @endforeach
+                </select>
+            </form>
+        </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach ($rooms as $room)
                 <div class="cursor-pointer rounded-xl bg-white p-3 shadow-lg hover:shadow-xl">

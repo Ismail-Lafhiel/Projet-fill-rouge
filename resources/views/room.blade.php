@@ -1,6 +1,31 @@
 <x-guest-layout>
     <x-header />
     <section class="container mx-auto px-5 py-2 lg:px-32 lg:pt-24">
+        @if (session()->has('error'))
+            <div id="alert-3"
+                class="flex items-center p-4 mb-4 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                role="alert">
+                <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                    viewBox="0 0 20 20">
+                    <path
+                        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                </svg>
+                <span class="sr-only">Info</span>
+                <div class="ms-3 text-sm font-medium">
+                    {{ session('error') }}
+                </div>
+                <button type="button"
+                    class="ms-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700"
+                    data-dismiss-target="#alert-3" aria-label="Close">
+                    <span class="sr-only">Close</span>
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                </button>
+            </div>
+        @endif
         <div class="py-6 lg:max-w-7xl max-w-2xl max-lg:mx-auto">
             <div class="grid items-start grid-cols-1 lg:grid-cols-2 gap-10">
                 <div class="w-full lg:sticky top-0 text-center">
@@ -54,7 +79,22 @@
                     <hr class="my-8" />
                     <div class="flex flex-wrap gap-4 items-start">
                         <div>
-                            <p class="text-gray-800 text-3xl font-bold">${{ $room->price }}</p>
+                            <p class="text-gray-800 text-3xl font-bold">${{ $room->price }}<span
+                                    class="text-2xl font-normal">/night</span></p>
+                        </div>
+                    </div>
+                    <hr class="my-8" />
+                    <div class="flex flex-wrap gap-4 items-start">
+                        <div>
+                            @if ($room->number_of_guests === 1)
+                                <span class="text-xl font-normal">This room can accept only </span>
+                                <span class="text-gray-800 text-2xl font-bold">{{ $room->number_of_guests }}
+                                    guest.</span>
+                            @else
+                                <span class="text-xl font-normal">This room can accept up to </span>
+                                <span class="text-gray-800 text-2xl font-bold">{{ $room->number_of_guests }}
+                                    guests.</span>
+                            @endif
                         </div>
                     </div>
                     <hr class="my-8" />
@@ -76,8 +116,9 @@
                         Description</li>
                 </ul>
                 <div class="mt-8">
-                    <h3 class="text-lg font-bold text-gray-800">Hotel Description</h3>
-                    <p class="text-sm text-gray-400 mt-4">{{ $room->description }}
+                    <h3 class="text-lg font-bold text-gray-800">Room Description</h3>
+                    <p class="text-md text-gray-600 mt-4">{{ $room->description }}.
+                        </span>
                     </p>
                 </div>
                 <div class="mt-8">

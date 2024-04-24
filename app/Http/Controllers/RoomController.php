@@ -30,6 +30,8 @@ class RoomController extends Controller
         $hotels = Hotel::all();
         $room_types = RoomType::all();
         $room_offers = RoomOffer::all();
+        $room = Room::all();
+        $bookings = $room->bookings()->where('room_id', 'id')->get();
         return view("rooms.index", compact("rooms", "hotels", "room_types", "room_offers"));
     }
 
