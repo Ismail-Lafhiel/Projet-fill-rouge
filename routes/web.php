@@ -9,6 +9,7 @@ use App\Http\Controllers\MainContentController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomOfferController;
 use App\Http\Controllers\RoomTypeController;
+use App\Http\Controllers\StatsController;
 use App\Http\Controllers\StripeController;
 use Illuminate\Support\Facades\Route;
 
@@ -85,9 +86,7 @@ Route::middleware([
     // room_offer routes 
     Route::resource('roomoffers', RoomOfferController::class);
     // admin dashboard
-    Route::get('/dashboard', function () {
-        return view("admin.index");
-    })->name("admin.dashboard");
+    Route::get('/dashboard', [StatsController::class, 'index'])->name("admin.dashboard");
 });
 
 Route::get('/{location}/hotels', [MainContentController::class, 'showHotelsInDestination'])->name('hotels.location');

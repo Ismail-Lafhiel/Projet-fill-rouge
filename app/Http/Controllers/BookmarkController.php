@@ -31,18 +31,6 @@ class BookmarkController extends Controller
 
         return response()->json(['message' => $message]);
     }
-
-    // Cancel bookmark for a room
-    public function cancelRoomBookmark(Request $request)
-    {
-        $userId = auth()->id();
-        $roomId = $request->input('entity_id');
-
-        $message = $this->toggleBookmark('room', $userId, $roomId, false);
-
-        return response()->json(['message' => $message]);
-    }
-
     // Cancel bookmark for a room
     public function cancelRoomBookmark(Request $request, $id)
     {
