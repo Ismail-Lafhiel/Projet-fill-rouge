@@ -60,20 +60,32 @@
                 <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 text-sm md:text-md lg:text-lg">View all rooms
                     from different hotels</p>
             </div>
-            <form class="flex flex-col md:flex-row gap-3">
+            <form class="flex flex-col md:flex-row gap-3" id="searchRoomForm" method="POST"
+                action="{{ route('searchRooms') }}">
+                @csrf
                 <div class="flex">
-                    <input type="text" placeholder="Search for your prefered room"
-                        class="w-full md:w-80 px-3 h-10 border-2  focus:outline-none focus:border-none rounded-lg">
+                    <input type="text" name="hotel_id" placeholder="Search hotel name"
+                        class="w-full md:w-80 px-3 h-10 border-2 focus:outline-none focus:border-none rounded-lg">
                 </div>
-                <select id="room_type_id" name="room_type_id" class="w-full h-10 border-2  focus:outline-none focus:border-none text-gray-600 px-2 md:px-3 py-0 md:py-1 tracking-wider rounded-lg">
+                <select id="room_type_id" name="room_type_id"
+                    class="w-full h-10 border-2 focus:outline-none focus:border-none text-gray-600 px-2 md:px-3 py-0 md:py-1 tracking-wider rounded-lg">
                     <option value="#" class="text-gray-500" selected>All</option>
                     @foreach ($room_types as $room_type)
-                        <option value="{{ $room_type->id }}">{{ $room_type->name }}</option>
+                        <option value="{{ $room_type->id }}">{{ $room_type->name }} room</option>
                     @endforeach
                 </select>
+                <div>
+                    <button type="submit"
+                        class="inline-flex px-3 py-2 text-white bg-primary-500 rounded-lg hover:bg-primary-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                            class="w-3 h-3 my-auto mr-2 fill-white">
+                            <path
+                                d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" />
+                        </svg>Search</button>
+                </div>
             </form>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="searchResults">
             @foreach ($rooms as $room)
                 <div class="cursor-pointer rounded-xl bg-white p-3 shadow-lg hover:shadow-xl">
                     <div class="relative flex items-end overflow-hidden rounded-xl"

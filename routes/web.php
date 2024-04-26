@@ -68,7 +68,10 @@ Route::get("/hotels-all", [MainContentController::class, 'hotels'])->name("hotel
 Route::get("/hotel/{hotel}", [MainContentController::class, 'hotel'])->name("hotel.view");
 Route::get("/rooms-all", [MainContentController::class, 'rooms'])->name("rooms.view");
 Route::get("/room/{room}", [MainContentController::class, 'room'])->name("room.view");
-
+// search
+Route::post('/search-destinations', [MainContentController::class, 'searchDestinations'])->name('searchDestinations');
+Route::post('/search-hotels', [MainContentController::class, 'searchHotels'])->name('searchHotels');
+Route::post('/search-rooms', [MainContentController::class, 'searchRooms'])->name('searchRooms');
 Route::middleware([
     'auth',
     'admin'

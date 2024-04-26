@@ -216,6 +216,213 @@ document.querySelectorAll('.deleteButton').forEach(button => {
     });
 });
 
+// search destinations:
+let searchDestinationForm = document.getElementById('searchDestinationForm');
+let searchDestinationRoute = searchDestinationForm.action;
+
+searchDestinationForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+    let formData = new FormData(this);
+    console.log('form submitted');
+    fetch(searchDestinationRoute, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.locations && data.locations.length > 0) {
+                console.log(data.locations);
+                let html = '';
+                data.locations.forEach(function (location) {
+                    html += '<div class="relative isolate flex flex-col justify-end overflow-hidden rounded-2xl px-8 pb-8 pt-40 w-[320px] h-[400px] mx-auto mt-4 transition duration-300 transform hover:scale-105 cursor-pointer" onclick="window.location.href = \'{{ route(\'hotels.location\', \'' + location.city + '\') }}\'">';
+                    if (location.photos.length > 0) {
+                        html += '<img src="/storage/' + location.photos[0].path + '" alt="" class="absolute inset-0 h-full w-full object-cover">';
+                    }
+                    html += '<div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40"></div>';
+                    html += '<h3 class="z-10 mt-3 text-3xl font-bold text-white">' + location.city + ', ' + location.country + '</h3>';
+                    html += '</div>';
+                });
+                document.getElementById('searchDestinationResults').innerHTML = html;
+            } else {
+                document.getElementById('searchDestinationResults').innerHTML = "<p>No results found</p>";
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+});
 
 
+// search hotels:
+// Hotel search form submission
+// var searchHotelRoute = document.getElementById('searchHotelForm').getAttribute('action');
+
+// document.getElementById('searchHotelForm').addEventListener('submit', function (event) {
+//     event.preventDefault();
+
+//     var formData = new FormData(this);
+//     fetch(searchHotelRoute, {
+//         method: 'POST',
+//         body: formData,
+//         headers: {
+//             'X-CSRF-TOKEN': '{{ csrf_token() }}'
+//         }
+//     })
+//         .then(response => response.json())
+//         .then(data => {
+//             if (data.hotels && data.hotels.length > 0) {
+//                 var html = '';
+//                 data.hotels.forEach(function (hotel) {
+//                     html += '<div class="cursor-pointer rounded-xl bg-white p-3 shadow-lg hover:shadow-xl">';
+//                     html += '<div class="relative flex items-end overflow-hidden rounded-xl" onclick="window.location.href = \'{{ route(\'hotel.view\', \'' + hotel.id + '\') }}\'">';
+//                     if (hotel.photos.length > 0) {
+//                         html += '<img class="h-[250px] w-full" src="/storage/' + hotel.photos[0].path + '" alt="Hotel Photo" />';
+//                     } else {
+//                         html += '<img class="h-[250px] w-full" src="{{ asset(\'storage/place_holder_img.jpg\') }}" alt="Placeholder" />';
+//                     }
+//                     html += '<div class="absolute bottom-3 left-3 inline-flex items-center rounded-lg bg-white p-2 shadow-md">';
+//                     html += '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">';
+//                     html += '<path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />';
+//                     html += '</svg>';
+//                     html += '<span class="ml-1 text-sm text-slate-400">' + hotel.rating + '</span>';
+//                     html += '</div>';
+//                     html += '</div>';
+//                     html += '<div class="mt-1 p-2">';
+//                     html += '<h2 class="text-slate-700">' + hotel.name + '</h2>';
+//                     html += '<p class="mt-1 text-sm text-slate-400">' + hotel.location.city + ', ' + hotel.location.country + '</p>';
+//                     html += '<div class="mt-3 flex items-end justify-between">';
+//                     html += '<p>';
+//                     html += '<span class="text-lg font-bold text-primary-500">' + hotel.number_of_rooms + '</span>';
+//                     html += '<span class="text-sm text-slate-400">room available</span>';
+//                     html += '</p>';
+//                     html += '<div class="group inline-flex rounded-xl bg-primary-100 p-2 hover:bg-primary-200">';
+//                     html += '<button type="button" class="bookmark-btn focus:outline-none" data-entityid="' + hotel.id + '" data-entitytype="hotel">';
+//                     html += '<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-primary-400 group-hover:text-primary-500" viewBox="0 0 20 20" fill="currentColor">';
+//                     html += '<path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" />';
+//                     html += '</svg>';
+//                     html += '</button>';
+//                     html += '</div>';
+//                     html += '</div>';
+//                     html += '</div>';
+//                     html += '</div>';
+//                 });
+//                 document.getElementById('searchResults').innerHTML = html;
+//             } else {
+//                 document.getElementById('searchResults').innerHTML = "<p>No results found</p>";
+//             }
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//         });
+// });
+var searchHotelRoute = document.getElementById('searchHotelForm').getAttribute('action');
+
+document.getElementById('searchHotelForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+    console.log("Form submitted"); // Check if this log appears in the console
+    var formData = new FormData(this);
+
+    fetch(searchHotelRoute, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data); // Log the response data to check if it's received correctly
+            if (data.hotels && data.hotels.length > 0) {
+                console.log(data.hotels);
+            } else {
+                // Your code to handle no results found
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+});
+
+
+var searchRoomsRoute = document.getElementById('searchRoomForm').getAttribute('action');
+document.getElementById('searchRoomForm').addEventListener('submit', function (event) {
+    console.log("Form submit event triggered");
+    event.preventDefault();
+    var formData = new FormData(this);
+
+    fetch(searchRoomsRoute, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data); // Log the response data to check if it's received correctly
+            if (data.rooms && data.rooms.length > 0) {
+                // Your code to handle room search results
+            } else {
+                // Your code to handle no results found
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+});
+
+
+// room search
+// var searchRoomsRoute = document.getElementById('searchRoomForm').getAttribute('action');
+// var roomViewBaseUrl = "{{ route('room.view', '') }}";
+// document.getElementById('searchRoomForm').addEventListener('submit', function (event) {
+//     console.log("gg");
+//     event.preventDefault();
+//     var formData = new FormData(this);
+
+//     fetch(searchRoomsRoute, {
+//         method: 'POST',
+//         body: formData,
+//         headers: {
+//             'X-CSRF-TOKEN': '{{ csrf_token() }}'
+//         }
+//     })
+//         .then(response => response.json())
+//         .then(data => {
+//             if (data.rooms && data.rooms.length > 0) {
+//                 var html = '';
+//                 data.rooms.forEach(function (room) {
+//                     html += '<div class="cursor-pointer rounded-xl bg-white p-3 shadow-lg hover:shadow-xl">';
+//                     html += '<div class="relative flex items-end overflow-hidden rounded-xl"';
+//                     // Add code here to display room photos, rating, etc.
+//                     html += '<h2 class="text-slate-700 text-md font-bold">' + room.room_type.name + ' room</h2>';
+//                     html += '<p class="mt-1 text-sm text-slate-400">' + room.hotel.name + '</p>';
+//                     html += '<div class="mt-3 flex items-end justify-between">';
+//                     html += '<p>';
+//                     html += '<span class="text-lg font-bold text-primary-500">$' + room.price + '</span>';
+//                     html += '<span class="text-sm text-slate-400">/night</span>';
+//                     html += '</p>';
+//                     html += '<div class="group inline-flex rounded-xl bg-primary-100 p-2 hover:bg-primary-200">';
+//                     html += '<button type="button" class="bookmark-btn focus:outline-none" data-entityid="' + room.id + '" data-entitytype="room">';
+//                     html += '<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-primary-400 group-hover:text-primary-500" viewBox="0 0 20 20" fill="currentColor">';
+//                     html += '<path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" />';
+//                     html += '</svg>';
+//                     html += '</button>';
+//                     html += '</div>';
+//                     html += '</div>';
+//                     html += '</div>';
+//                     html += '</div>';
+//                 });
+//                 document.getElementById('searchResults').innerHTML = html;
+//             } else {
+//                 document.getElementById('searchResults').innerHTML = "<p>No results found</p>";
+//             }
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//         });
+// });
 
