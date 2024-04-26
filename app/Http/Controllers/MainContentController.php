@@ -144,15 +144,17 @@ class MainContentController extends Controller
     }
     public function searchRooms(Request $request)
     {
-        $hotel_id = $request->input('hotel_id');
+        $hotel_name = $request->input('name');
         $room_type_id = $request->input('room_type_id');
 
         $roomQuery = Room::query();
 
-        if ($hotel_id || $room_type_id) {
-            $roomQuery->where(function ($query) use ($hotel_id, $room_type_id) {
-                if ($hotel_id) {
-                    $query->where('hotel_id', $hotel_id);
+        $roomQuery->join('hotels', 'rooms.hotel_id', '=', 'hotels.id');
+
+        if ($hotel_name || $room_type_id) {
+            $roomQuery->where(function ($query) use ($hotel_name, $room_type_id) {
+                if ($hotel_name) {
+                    $query->where('hotels.name', 'like', '%' . $hotel_name . '%');
                 }
                 if ($room_type_id && $room_type_id != "#") {
                     $query->where('room_type_id', $room_type_id);
@@ -160,12 +162,14 @@ class MainContentController extends Controller
             });
         }
 
-        $rooms = $roomQuery->with(['photos', 'roomType', 'hotel'])->orderBy('created_at', 'desc')->get();
-
+        $rooms = $roomQuery
+            ->with(['photos', 'roomType', 'hotel'])
+            ->orderBy('rooms.created_at', 'desc')
+            ->get();
         if ($rooms->isEmpty()) {
             return response()->json(['message' => 'No results found']);
         }
-
+        // dd($rooms);
         return response()->json(['rooms' => $rooms]);
     }
 }

@@ -64,7 +64,7 @@
                 action="{{ route('searchRooms') }}">
                 @csrf
                 <div class="flex">
-                    <input type="text" name="hotel_id" placeholder="Search hotel name"
+                    <input type="text" name="name" placeholder="Search hotel name"
                         class="w-full md:w-80 px-3 h-10 border-2 focus:outline-none focus:border-none rounded-lg">
                 </div>
                 <select id="room_type_id" name="room_type_id"
@@ -140,4 +140,85 @@
     </div>
 </section>
 <x-footer />
+<script>
+    let searchRooms = document.getElementById('searchRoomForm')
+    searchRooms.addEventListener('submit', function(event) {
+        var searchRoomsRoute = searchRooms.action;
+        console.log("Form submit event triggered");
+        event.preventDefault();
+        var formData = new FormData(this);
+
+        fetch(searchRoomsRoute, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if (data.rooms && data.rooms.length > 0) {
+                    var html = '';
+                    data.rooms.forEach(function(room) {
+                        console.log(room.room_type);
+                        html +=
+                            '<div class="cursor-pointer rounded-xl bg-white p-3 shadow-lg hover:shadow-xl">';
+                        html +=
+                            '<div class="relative flex items-end overflow-hidden rounded-xl" onclick="window.location.href = \'{{ route('room.view', '') }}' +
+                            room.id + '\'">';
+                        if (room.photos.length > 0) {
+                            html += '<img class="h-[250px] w-full" src="/storage/' + room.photos[0]
+                                .path + '" alt="Room Photo" />';
+                        } else {
+                            html +=
+                                '<img class="h-[250px] w-full" src="{{ asset('storage/place_holder_img.jpg') }}" alt="Placeholder" />';
+                        }
+                        html +=
+                            '<div class="absolute bottom-3 left-3 inline-flex items-center rounded-lg bg-white p-2 shadow-md">';
+                        html +=
+                            '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">';
+                        html +=
+                            '<path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />';
+                        html += '</svg>';
+                        html += '<span class="ml-1 text-sm text-slate-400">' + room.rating +
+                            '</span>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '<div class="mt-1 p-2">';
+                        html += '<h2 class="text-slate-700">' + room.room_type.name + ' room</h2>';
+                        html += '<p class="mt-1 text-sm text-slate-400">' + room.hotel.name +
+                            '</p>';
+                        html += '<div class="mt-3 flex items-end justify-between">';
+                        html += '<p>';
+                        html +=
+                            '<span class="text-lg font-bold text-primary-500">' + room.price +
+                            '</span>';
+                        html += '<span class="text-sm text-slate-400">/night</span>';
+                        html += '</p>';
+                        html +=
+                            '<div class="group inline-flex rounded-xl bg-primary-100 p-2 hover:bg-primary-200">';
+                        html +=
+                            '<button type="button" class="bookmark-btn focus:outline-none" data-entityid="' +
+                            room.id + '" data-entitytype="room">';
+                        html +=
+                            '<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-primary-400 group-hover:text-primary-500" viewBox="0 0 20 20" fill="currentColor">';
+                        html += '<path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" />';
+                        html += '</svg>';
+                        html += '</button>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '</div>';
+                    });
+                    document.getElementById('searchResults').innerHTML = html;
+                } else {
+                    document.getElementById('searchResults').innerHTML = "<p>No results found</p>";
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+</script>
 </x-guest-layout>
