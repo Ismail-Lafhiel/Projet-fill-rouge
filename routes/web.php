@@ -11,6 +11,7 @@ use App\Http\Controllers\RoomOfferController;
 use App\Http\Controllers\RoomTypeController;
 use App\Http\Controllers\StatsController;
 use App\Http\Controllers\StripeController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -90,6 +91,7 @@ Route::middleware([
     Route::resource('roomoffers', RoomOfferController::class);
     // admin dashboard
     Route::get('/dashboard', [StatsController::class, 'index'])->name("admin.dashboard");
+    Route::resource('users', UserController::class);
 });
 
 Route::get('/{location}/hotels', [MainContentController::class, 'showHotelsInDestination'])->name('hotels.location');
