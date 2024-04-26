@@ -134,7 +134,7 @@ class MainContentController extends Controller
             });
         }
 
-        $hotels = $hotelsQuery->with('photos')->orderBy("created_at", 'desc')->get();
+        $hotels = $hotelsQuery->with(['photos', 'location', 'rooms'])->orderBy("created_at", 'desc')->get();
 
         if ($hotels->isEmpty()) {
             return response()->json(['message' => 'No results found']);
